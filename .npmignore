@@ -1,0 +1,19 @@
+# misc
+.github/**
+.vscode/**
+.husky/**
+src/**
+tests/**
+
+.commitlintrc.json
+.gitignore
+.lintstagedrc.json
+.markdownlint.json
+.prettierignore
+.prettierrc
+.releaserc.json
+eslint.config.mjs
+package-lock.json
+tsconfig.json
+tsconfig.build.json
+vitest.config.mts

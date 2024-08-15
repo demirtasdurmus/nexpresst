@@ -1,0 +1,35 @@
+name: Releasing With Semantic Release
+
+env:
+  NODE_VERSION: 20.14.0
+
+on:
+  push:
+    branches: [main, release]
+
+jobs:
+  releasing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use Node.js ${{env.NODE_VERSION}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Set up Git and run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
