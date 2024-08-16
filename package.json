@@ -1,16 +1,16 @@
 {
-  "name": "nextpress",
+  "name": "nexpresst",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/demirtasdurmus/nextpress.git"
+    "url": "git+https://github.com/demirtasdurmus/nexpresst.git"
   },
   "bugs": {
-    "url": "https://github.com/demirtasdurmus/nextpress/issues"
+    "url": "https://github.com/demirtasdurmus/nexpresst/issues"
   },
-  "homepage": "https://github.com/demirtasdurmus/nextpress#readme",
+  "homepage": "https://github.com/demirtasdurmus/nexpresst#readme",
   "keywords": [],
   "author": "",
   "license": "ISC",

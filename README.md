@@ -1,8 +1,8 @@
-# Nextpress
+# Nexpresst
 
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nextpress/latest.svg)](https://www.npmjs.com/package/nextpress) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-Nextpress is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing, all with strong TypeScript support.
+Nexpresst is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing, all with strong TypeScript support.
 
 ## Features
 
@@ -13,10 +13,10 @@ Nextpress is a lightweight TypeScript utility designed to build Express-like API
 
 ## Installation
 
-To install `nextpress` in your Next.js project, run:
+To install `nexpresst` in your Next.js project, run:
 
 ```bash
-npm install nextpress
+npm install nexpresst
 ```
 
 ## Getting Started
@@ -28,7 +28,7 @@ Start by creating a router instance in your Next.js application. This router wil
 ```typescript
 // @/app/lib/router.ts
 
-import { Router } from 'nextpress';
+import { Router } from 'nexpresst';
 // import { cors } from "./middlewares/cors";
 // import { jsonParser } from "./middlewares/json-parser";
 
@@ -50,7 +50,7 @@ Example: Handling GET Requests
 
 import { apiRouter } from '@/lib/router';
 import { NextRequest } from 'next/server';
-import { IRouteHandler, processRequest, TNextContext } from 'nextpress';
+import { IRouteHandler, processRequest, TNextContext } from 'nexpresst';
 
 // Define a GET handler
 const getPostsHandler: IRouteHandler = async (req, res) => {
@@ -71,7 +71,7 @@ Example: Handling POST Requests
 
 import { apiRouter } from '@/lib/router';
 import { NextRequest } from 'next/server';
-import { IRouteHandler, processRequest, TNextContext } from 'nextpress';
+import { IRouteHandler, processRequest, TNextContext } from 'nexpresst';
 
 // Define a POST handler with type support for payload and response
 const createPostHandler: IRouteHandler<
@@ -93,7 +93,7 @@ export function POST(req: NextRequest, ctx: TNextContext) {
 
 ### Typescript Support
 
-Nextpress leverages TypeScript to provide strong typing for both middleware and route handlers.
+Nexpresst leverages TypeScript to provide strong typing for both middleware and route handlers.
 
 #### Middleware Typing
 
@@ -102,7 +102,7 @@ When adding middleware, you can define the types for request and response object
 ```typescript
 // @/app/lib/middlewares/example.ts
 
-import { IMiddlewareHandler } from 'nextpress';
+import { IMiddlewareHandler } from 'nexpresst';
 
 const example: IMiddlewareHandler<
   { id: string }, // Path parameters (e.g., /posts/:id)
@@ -125,7 +125,7 @@ The `IRouteHandler` interface allows you to define the types for path parameters
 ```typescript
 // @/app/api/posts/route.ts
 
-import { IRouteHandler } from 'nextpress';
+import { IRouteHandler } from 'nexpresst';
 
 const example: IRouteHandler<
   { id: string }, // Path parameters (e.g., /posts/:id)

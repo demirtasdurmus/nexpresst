@@ -1,6 +1,6 @@
 {
   "branches": ["main", { "name": "release", "prerelease": "rc" }],
-  "repositoryUrl": "https://github.com/demirtasdurmus/nextpress.git",
+  "repositoryUrl": "https://github.com/demirtasdurmus/nexpresst.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     [
@@ -9,7 +9,7 @@
         "preset": "angular",
         "host": "https://github.com",
         "owner": "demirtasdurmus",
-        "repo": "nextpress",
+        "repo": "nexpresst",
         "parserOpts": {
           "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
@@ -22,7 +22,7 @@
       "@semantic-release/changelog",
       {
         "changelogFile": "CHANGELOG.md",
-        "changelogTitle": "# Nextpress Changelog"
+        "changelogTitle": "# Nexpresst Changelog"
       }
     ],
     [
