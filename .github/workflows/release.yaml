@@ -5,7 +5,9 @@ env:
 
 on:
   push:
-    branches: [main, release]
+    branches:
+      - release
+      - main
 
 jobs:
   releasing:

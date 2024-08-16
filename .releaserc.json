@@ -1,5 +1,5 @@
 {
-  "branches": ["main", { "name": "release/*", "prerelease": "rc" }],
+  "branches": ["main", { "name": "release", "prerelease": "rc" }],
   "repositoryUrl": "https://github.com/demirtasdurmus/nextpress.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
