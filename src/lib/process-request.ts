@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { TNextContext } from '../interfaces';
 import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
@@ -9,6 +9,9 @@ export function processRequest<Req extends Request = Request>(
   context: TNextContext,
   router: Router,
 ): Promise<NextResponse<unknown>> {
+  // TODO: Find a better way to get query params
+  const query = Object.fromEntries((req as unknown as NextRequest).nextUrl.searchParams.entries());
+
   const customReq = new CustomRequest(req.url, {
     ...req,
     method: req.method,
@@ -25,6 +28,7 @@ export function processRequest<Req extends Request = Request>(
     signal: req.signal,
     ...(req.body ? { duplex: 'half' } : {}),
     params: context.params || {},
+    query,
   });
 
   const customRes = new CustomResponse();
