@@ -108,16 +108,3 @@ export class Router {
     }
   }
 }
-
-// private routes: Map<Method, Map<RouteMatch, RequestHandler<Req, Res>>> = new Map();
-
-// public add(method: Method, path: string, handler: RequestHandler<Req, Res>) {
-//   if (!this.routes.has(method)) {
-//     this.routes.set(method, new Map());
-//   }
-//   this.routes.get(method)!.set(path, handler);
-// }
-
-// public find(method: Method, path: string): RequestHandler<Req, Res> | undefined {
-//   return this.routes.get(method)?.get(path);
-// }
