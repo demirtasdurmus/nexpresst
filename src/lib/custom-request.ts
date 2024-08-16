@@ -1,6 +1,5 @@
 import { NextRequest } from 'next/server';
-import { CustomRequestInit } from '../interfaces/custom-request-init';
-import { RequestInfo } from '../interfaces/request-info';
+import { CustomRequestInit, RequestInfo } from '../interfaces';
 
 export class CustomRequest<
   TParams = unknown,
@@ -8,6 +7,11 @@ export class CustomRequest<
   TPayload = unknown,
   TUser = unknown,
 > extends NextRequest {
+  /**
+   * The following properties are used to provide type information for the custom request object.
+   * They are mostly useful while creating middleware and route handlers.
+   * The generics passed to these interfaces will be passed to the custom request object.
+   */
   params!: TParams;
   query!: TQuery;
   payload!: TPayload;

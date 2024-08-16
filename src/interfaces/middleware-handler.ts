@@ -1,7 +1,7 @@
-import type { NextHandler } from 'next-connect';
 import { CustomRequest } from '../lib/custom-request';
 import { CustomResponse } from '../lib/custom-response';
 import { NextResponse } from 'next/server';
+import { NextHandler } from './util-types';
 
 export interface IMiddlewareHandler<
   TParams = unknown,

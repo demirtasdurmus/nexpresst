@@ -1,25 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { TNextContext } from '../interfaces/next-context';
-import { createEdgeRouter } from 'next-connect';
+import { NextResponse } from 'next/server';
+import { TNextContext } from '../interfaces';
 import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
+import { Router } from './router';
 
-export function processRequest(
-  req: NextRequest,
+export function processRequest<Req extends Request = Request>(
+  req: Req,
   context: TNextContext,
-  router: ReturnType<typeof createEdgeRouter<CustomRequest, CustomResponse>>,
+  router: Router,
 ): Promise<NextResponse<unknown>> {
-  const query = Object.fromEntries(req.nextUrl.searchParams.entries());
-
   const customReq = new CustomRequest(req.url, {
+    ...req,
     method: req.method,
     headers: req.headers,
     body: req.body,
-    // cache: req.cache,
+    cache: req.cache,
     credentials: req.credentials,
-    geo: req.geo,
     integrity: req.integrity,
-    ip: req.ip,
     keepalive: req.keepalive,
     mode: req.mode,
     redirect: req.redirect,
@@ -28,7 +25,6 @@ export function processRequest(
     signal: req.signal,
     ...(req.body ? { duplex: 'half' } : {}),
     params: context.params || {},
-    query,
   });
 
   const customRes = new CustomResponse();
