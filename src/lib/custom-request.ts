@@ -27,5 +27,29 @@ export class CustomRequest<
     if (init?.params) {
       this.params = init.params;
     }
+
+    /**
+     * If the query is present in the initialization object, it is assigned to the CustomRequest instance.
+     * With this, we can access the query in the route handler as `req.query`.
+     */
+    if (init?.query) {
+      this.query = init.query;
+    }
+
+    /**
+     * If the payload is present in the initialization object, it is assigned to the CustomRequest instance
+     * With this, we can access the payload in the route handler as `req.payload`.
+     */
+    if (init?.payload) {
+      this.payload = init.payload;
+    }
+
+    /**
+     * If the session is present in the initialization object, it is assigned to the CustomRequest instance.
+     * With this, we can access the session in the route handler as `req.session`.
+     */
+    if (init?.session) {
+      this.session = init.session;
+    }
   }
 }
