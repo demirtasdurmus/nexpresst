@@ -29,6 +29,7 @@
     "dev": "npm run dev:tsc & npm run dev:node",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint": "eslint --fix .",
     "prepare": "husky"
   },
   "devDependencies": {
