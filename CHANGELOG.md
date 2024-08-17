@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.0.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.0.0-rc.1...v1.0.0-rc.2) (2024-08-17)
+
+
+### Features
+
+* decouple query parsing from custom request initialization ([d479374](https://github.com/demirtasdurmus/nexpresst/commit/d479374c7e08ef02cbda04786962cbe0606bc6bb))
+
 # 1.0.0-rc.1 (2024-08-16)
 
 
