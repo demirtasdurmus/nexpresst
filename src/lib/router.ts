@@ -95,7 +95,7 @@ export class Router {
       if (this.errorHandler) {
         return this.errorHandler(req, res, () => Promise.reject(err));
       } else {
-        console.error(err);
+        if (process.env.NODE_ENV !== 'test') console.error(err);
         return new Response(
           `Internal Server Error: ${
             (err as any).message
