@@ -5,7 +5,7 @@ export class CustomRequest<
   TParams = unknown,
   TQuery = unknown,
   TPayload = unknown,
-  TUser = unknown,
+  TSession = unknown,
 > extends NextRequest {
   /**
    * The following properties are used to provide type information for the custom request object.
@@ -15,16 +15,17 @@ export class CustomRequest<
   params!: TParams;
   query!: TQuery;
   payload!: TPayload;
-  user!: TUser;
+  session!: TSession;
 
   constructor(input: URL | RequestInfo, init?: CustomRequestInit) {
     super(input, init);
+
+    /**
+     * Params is assigned to CustomRequest initialization from the NextContext.
+     * With this, we can access the params in the route handler as `req.params`.
+     */
     if (init?.params) {
       this.params = init.params;
-    }
-
-    if (init?.query) {
-      this.query = init.query;
     }
   }
 }
