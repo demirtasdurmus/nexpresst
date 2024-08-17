@@ -11,8 +11,14 @@
     "url": "https://github.com/demirtasdurmus/nexpresst/issues"
   },
   "homepage": "https://github.com/demirtasdurmus/nexpresst#readme",
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "next.js",
+    "express",
+    "serverless",
+    "api",
+    "typescript"
+  ],
+  "author": "Durmus Demirtas",
   "license": "ISC",
   "description": "Write express-like APIs with Next.js serverless functions",
   "scripts": {
