@@ -43,7 +43,7 @@ export interface CustomRequestInit extends RequestInit {
   params?: any;
   query?: any;
   payload?: any;
-  user?: any;
+  session?: any;
 }
 
 export type RequestInfo = Request | string;

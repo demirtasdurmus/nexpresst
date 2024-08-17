@@ -29,11 +29,11 @@ Start by creating a router instance in your Next.js application. This router wil
 // @/app/lib/router.ts
 
 import { Router } from 'nexpresst';
-// import { cors } from "./middlewares/cors";
+// import { queryParser } from "./middlewares/query-parser";
 // import { jsonParser } from "./middlewares/json-parser";
 
 export const apiRouter = new Router();
-// .use(cors) <-- Global middleware here
+// .use(queryParser) <-- Global middleware here
 // .use(jsonParser); <-- Global middleware here
 ```
 
@@ -77,7 +77,7 @@ import { IRouteHandler, processRequest, TNextContext } from 'nexpresst';
 const createPostHandler: IRouteHandler<
   unknown, // Path parameters (not used here)
   unknown, // Query parameters (not used here)
-  { title: string }, // Request payload
+  { title: string }, // Request payload, requires body parsing
   { message: string } // Response payload
 > = async (req, res) => {
   console.log(req.payload.title); // <--- This will come with type support
@@ -95,6 +95,8 @@ export function POST(req: NextRequest, ctx: TNextContext) {
 
 Nexpresst leverages TypeScript to provide strong typing for both middleware and route handlers.
 
+**🔺Important**: Note that to be able to use `payload` and `query` from the request object, you should parse them first with the help of middlewares. Since Nexpresst is a minimalist plugin, it does not parse out of the box for now. The below examples assume that you already parse your relevant data and maybe validate before, with the help of library such as [`Zod`](https://www.npmjs.com/package/zod).
+
 #### Middleware Typing
 
 When adding middleware, you can define the types for request and response objects to ensure type safety.
@@ -108,6 +110,7 @@ const example: IMiddlewareHandler<
   { id: string }, // Path parameters (e.g., /posts/:id)
   { search: string }, // Query parameters (e.g., /posts?search=term)
   { title: string } // Request payload (e.g., { title: "New Post" })
+  { session: object } // Request session, if any
 > = (req, res, next) => {
   const { id } = req.params;
   const { search } = req.query;
@@ -132,6 +135,7 @@ const example: IRouteHandler<
   { search: string }, // Query parameters (e.g., /posts?search=term)
   { title: string }, // Request payload (e.g., { title: "New Post" })
   { message: string } // Response payload (e.g., { message: "Success" })
+  { session: object } // Request session, if any
 > = (req, res, next) => {
   const { id } = req.params;
   const { search } = req.query;
@@ -174,6 +178,35 @@ export function GET(req: NextRequest, ctx: TNextContext) {
   const router = apiRouter.get(getPostsHandler);
   return processRequest(req, ctx, router);
 }
+```
+
+### Error Handling
+
+You can optionally add an `onError` middleware to your global router to handle errors gracefully.
+
+```typescript
+// @/app/lib/router.ts
+import { IMiddlewareHandler } from 'nexpresst';
+
+// Example error handler middleware
+const errorHandler: IMiddlewareHandler = (_req, res, next) => {
+  return next().catch((err: unknown) => {
+    /**
+     * This is just a simple demonstration of how to handle errors.
+     * Add your custom error logging and response handling here.
+     */
+    if (err instanceof Error) {
+      return res.statusCode(500).send({ name: err.name, message: err.message });
+    }
+    return res
+      .statusCode(500)
+      .send({ name: 'INTERNAL_SERVER_ERROR', message: 'Something went wrong' });
+  });
+};
+
+export const apiRouter = new Router()
+  .onError(errorHandler) // Handle errors gracefully
+  .use(middleware, anotherMiddleware); // Add other middlewares
 ```
 
 ### Example Project
