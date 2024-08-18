@@ -5,15 +5,15 @@ describe('CustomResponse', () => {
   it('should create an instance of CustomResponse with default status code 200', () => {
     const response = new CustomResponse();
 
-    expect(response instanceof CustomResponse).toBe(true);
-    expect(response.status).toBe(200);
+    expect(response instanceof CustomResponse).toEqual(true);
+    expect(response.status).toEqual(200);
   });
 
   it('should set the status code correctly using statusCode()', () => {
     const response = new CustomResponse();
     const res = response.statusCode(204).send();
 
-    expect(res.status).toBe(204);
+    expect(res.status).toEqual(204);
   });
 
   it('should throw an error if status code is not a number', () => {
@@ -35,7 +35,7 @@ describe('CustomResponse', () => {
     const response = new CustomResponse();
     const jsonResponse = response.statusCode(201).send({ success: true });
 
-    expect(jsonResponse.status).toBe(201);
+    expect(jsonResponse.status).toEqual(201);
     expect(jsonResponse.headers.get('Content-Type')).toContain('application/json');
   });
 
@@ -43,16 +43,16 @@ describe('CustomResponse', () => {
     const response = new CustomResponse();
     const noContentResponse = response.statusCode(204).send();
 
-    expect(noContentResponse.status).toBe(204);
-    expect(noContentResponse.body).toBe(null);
+    expect(noContentResponse.status).toEqual(204);
+    expect(noContentResponse.body).toEqual(null);
   });
 
   it('should send a response with null body for 304 Not Modified status', () => {
     const response = new CustomResponse();
     const notModifiedResponse = response.statusCode(304).send();
 
-    expect(notModifiedResponse.status).toBe(304);
-    expect(notModifiedResponse.body).toBe(null);
+    expect(notModifiedResponse.status).toEqual(304);
+    expect(notModifiedResponse.body).toEqual(null);
   });
 
   it('should set custom headers on the response', () => {
@@ -60,7 +60,7 @@ describe('CustomResponse', () => {
     response.headers.set('X-Custom-Header', 'custom-value');
 
     const jsonResponse = response.send({ success: true });
-    expect(jsonResponse.headers.get('X-Custom-Header')).toBe('custom-value');
+    expect(jsonResponse.headers.get('X-Custom-Header')).toEqual('custom-value');
   });
 
   it('should override default Content-Type header', () => {
@@ -68,6 +68,22 @@ describe('CustomResponse', () => {
     response.headers.set('Content-Type', 'text/plain');
 
     const jsonResponse = response.send('Plain text response');
-    expect(jsonResponse.headers.get('Content-Type')).toBe('text/plain');
+    expect(jsonResponse.headers.get('Content-Type')).toEqual('text/plain');
+  });
+
+  it('should send an empty response with default status code 200', () => {
+    const response = new CustomResponse();
+    const defaultResponse = response.send();
+
+    expect(defaultResponse.status).toEqual(200);
+    expect(defaultResponse.body).toEqual(null);
+  });
+
+  it('should send an empty response with an explicit status code', () => {
+    const response = new CustomResponse();
+    const emptyResponse = response.statusCode(404).send();
+
+    expect(emptyResponse.status).toEqual(404);
+    expect(emptyResponse.body).toEqual(null);
   });
 });
