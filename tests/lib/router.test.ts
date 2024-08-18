@@ -13,7 +13,7 @@ describe('Router', () => {
     const req = { method: 'GET' } as CustomRequest;
     const res = new CustomResponse();
 
-    const response = await router.run(req, res);
+    const response = await router.execute(req, res);
 
     expect(mockMiddleware).toHaveBeenCalledOnce();
     expect(response!.status).toEqual(200);
@@ -32,7 +32,7 @@ describe('Router', () => {
     const req = { method: 'GET' } as CustomRequest;
     const res = new CustomResponse();
 
-    const response = await router.run(req, res);
+    const response = await router.execute(req, res);
 
     expect(mockHandler).toHaveBeenCalledOnce();
     expect(response!.status).toEqual(200);
@@ -45,7 +45,7 @@ describe('Router', () => {
     const req = { method: 'DELETE' } as CustomRequest;
     const res = new CustomResponse();
 
-    const response = await router.run(req, res);
+    const response = await router.execute(req, res);
 
     expect(response!.status).toEqual(500);
     expect(await response!.text()).toEqual(
@@ -65,7 +65,7 @@ describe('Router', () => {
     const req = { method: 'GET' } as CustomRequest;
     const res = new CustomResponse();
 
-    const response = await router.run(req, res);
+    const response = await router.execute(req, res);
 
     expect(errorHandler).toHaveBeenCalledOnce();
     expect(response!.status).toEqual(500);
@@ -88,7 +88,7 @@ describe('Router', () => {
     const req = { method: 'GET' } as CustomRequest;
     const res = new CustomResponse();
 
-    const response = await router.run(req, res);
+    const response = await router.execute(req, res);
 
     expect(firstMiddleware).toHaveBeenCalledOnce();
     expect(secondMiddleware).toHaveBeenCalledOnce();

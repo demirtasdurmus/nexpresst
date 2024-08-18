@@ -7,15 +7,15 @@ describe('processRequest', () => {
     const context: TNextContext = { params: {} };
     const router = new Router();
 
-    // Mock the router's run method
-    const runMock = vi.spyOn(router, 'run').mockResolvedValueOnce(new CustomResponse());
+    // Mock the router's execute method
+    const executeMock = vi.spyOn(router, 'execute').mockResolvedValueOnce(new CustomResponse());
 
     const response = await processRequest(req, context, router);
 
-    expect(runMock).toHaveBeenCalled();
+    expect(executeMock).toHaveBeenCalled();
     expect(response instanceof CustomResponse).toBe(true);
 
-    runMock.mockRestore();
+    executeMock.mockRestore();
   });
 
   it('should pass request data correctly to CustomRequest', async () => {
@@ -26,8 +26,8 @@ describe('processRequest', () => {
     const context: TNextContext = { params: { id: '123' } };
     const router = new Router();
 
-    // Mock the router's run method
-    vi.spyOn(router, 'run').mockImplementation((customReq, customRes) => {
+    // Mock the router's execute method
+    vi.spyOn(router, 'execute').mockImplementation((customReq, customRes) => {
       expect(customReq.url).toBe('https://example.com/api/test');
       expect(customReq.method).toBe('POST');
       expect(customReq.headers.get('Content-Type')).toBe('application/json');
@@ -46,7 +46,7 @@ describe('processRequest', () => {
     const context: TNextContext = { params: {} };
     const router = new Router();
 
-    vi.spyOn(router, 'run').mockImplementation((customReq, customRes) => {
+    vi.spyOn(router, 'execute').mockImplementation((customReq, customRes) => {
       expect(customReq.duplex).toBe('half');
       return Promise.resolve(customRes);
     });
@@ -60,7 +60,7 @@ describe('processRequest', () => {
   //   const context: TNextContext = { params: {} };
   //   const router = new Router();
 
-  //   vi.spyOn(router, 'run').mockImplementation((customReq, customRes) => {
+  //   vi.spyOn(router, 'execute').mockImplementation((customReq, customRes) => {
   //     expect(customReq.duplex).toBeUndefined();
   //     return Promise.resolve(customRes);
   //   });
@@ -73,7 +73,7 @@ describe('processRequest', () => {
     const context: TNextContext = { params: { userId: 'abc123' } };
     const router = new Router();
 
-    vi.spyOn(router, 'run').mockImplementation((customReq, customRes) => {
+    vi.spyOn(router, 'execute').mockImplementation((customReq, customRes) => {
       expect(customReq.params).toEqual({ userId: 'abc123' });
       return Promise.resolve(customRes);
     });
@@ -87,19 +87,19 @@ describe('processRequest', () => {
     const router = new Router();
 
     const mockResponse = new CustomResponse();
-    vi.spyOn(router, 'run').mockResolvedValueOnce(mockResponse);
+    vi.spyOn(router, 'execute').mockResolvedValueOnce(mockResponse);
 
     const response = await processRequest(req, context, router);
     expect(response).toBe(mockResponse);
   });
 
-  it('should handle errors thrown in the router.run method', async () => {
+  it('should handle errors thrown in the router.execute method', async () => {
     const req = new Request('https://example.com/api/test', { method: 'GET' });
     const context: TNextContext = { params: {} };
     const router = new Router();
 
     const error = new Error('Something went wrong');
-    vi.spyOn(router, 'run').mockRejectedValueOnce(error);
+    vi.spyOn(router, 'execute').mockRejectedValueOnce(error);
 
     try {
       await processRequest(req, context, router);
@@ -116,7 +116,7 @@ describe('processRequest', () => {
       const context: TNextContext = { params: {} };
       const router = new Router();
 
-      vi.spyOn(router, 'run').mockImplementation((customReq, customRes) => {
+      vi.spyOn(router, 'execute').mockImplementation((customReq, customRes) => {
         expect(customReq.method).toBe(method);
         return Promise.resolve(customRes);
       });

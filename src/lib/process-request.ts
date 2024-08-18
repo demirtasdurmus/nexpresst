@@ -29,5 +29,5 @@ export function processRequest<Req extends Request = Request>(
 
   const customRes = new CustomResponse();
 
-  return router.run(customReq, customRes) as Promise<NextResponse<unknown>>;
+  return router.execute(customReq, customRes) as Promise<NextResponse<unknown>>;
 }
