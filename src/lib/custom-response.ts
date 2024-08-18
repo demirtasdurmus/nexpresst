@@ -43,10 +43,17 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
         status: this._statusCode,
       });
     } else {
-      // Regular JSON response
-      response = NextResponse.json(body, {
-        status: this._statusCode,
-      });
+      if (body) {
+        // Regular JSON response
+        response = NextResponse.json(body, {
+          status: this._statusCode,
+        });
+      } else {
+        // Default to an empty response
+        response = new NextResponse(null, {
+          status: this._statusCode,
+        });
+      }
     }
 
     // Set headers on the response
