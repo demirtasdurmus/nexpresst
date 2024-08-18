@@ -70,5 +70,5 @@ export type TNextContext = {
 };
 
 export type HttpMethodHandlers<Req extends Request> = {
-  [M in HttpMethod]: (req: Req, ctx: TNextContext) => void;
+  [M in HttpMethod]: (req: Req, ctx: TNextContext) => ValueOrPromise<any>;
 };
