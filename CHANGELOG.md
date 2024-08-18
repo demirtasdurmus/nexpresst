@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+## [1.2.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.2.0...v1.2.1) (2024-08-18)
+
+
+### Bug Fixes
+
+* fix documentation on dynamic router usage ([#13](https://github.com/demirtasdurmus/nexpresst/issues/13)) ([f0bd1d7](https://github.com/demirtasdurmus/nexpresst/commit/f0bd1d7544a4490ca2902253f798be2d720eed1c))
+
 # [1.2.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.1.1...v1.2.0) (2024-08-18)
 
 
