@@ -2,7 +2,7 @@
 
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-Nexpresst is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
+**Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
 ## Features
 
@@ -127,7 +127,7 @@ export const cors: IMiddlewareHandler = async (req, res, next) => {
 
 ### Typescript Support
 
-Nexpresst leverages TypeScript to provide strong typing for both middleware and route handlers.
+**Nexpresst** leverages TypeScript to provide strong typing for both middleware and route handlers.
 
 #### Route Handler Typing
 
@@ -246,7 +246,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 
 ### Error Handling
 
-You can optionally register an `onError` middleware to your global router to handle errors gracefully.
+You can optionally register an `onError` middleware with global router to handle errors gracefully.
 
 ```ts
 // @/app/lib/middlewares/error-handler.ts
@@ -284,9 +284,49 @@ And then in your `router.ts` file:
 import { errorHandler } from '@/lib/middlewares';
 
 export const apiRouter = new Router()
-  .onError(errorHandler) // Register errorHandler middleware to your global router instance
+  .onError(errorHandler) // Register errorHandler middleware with your global router instance
   .use(middleware, anotherMiddleware); // Add other middlewares
 ```
+
+### Catch-All route and Custom 404 Response
+
+In Next.js, the file-based routing system automatically provides a default error page for requests made to non-existent endpoints. However, in modern REST APIs, relying on a generic `404` page isn't ideal.
+
+**Nexpresst** offers a more flexible solution that allows you to handle 404 errors in a custom and developer-friendly way.
+
+To address this issue, start by creating a [catch-all](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) segment at the root of your `api` folder:
+
+```bash
+📦app
+ ┣ 📂api
+ ┃ ┣ 📂[[...params]] <--------- Catch-all route
+ ┃ ┃ ┗ 📜route.ts
+ ┃ ┗ 📂posts
+ ┃ ┃ ┣ 📜route.ts
+ ┣ 📜favicon.ico
+ ┣ 📜globals.css
+ ┣ 📜layout.tsx
+ ┗ 📜page.tsx
+```
+
+In the `[[...params]]/route.ts` file, add the following code:
+
+```ts
+import { apiRouter } from '@/lib/router';
+import { exportAllMethods, IRouteHandler } from 'nexpresst';
+
+const notFoundHandler: IRouteHandler = async (req, res) => {
+  console.log(req.params); // // Access to params passed as a string[]
+  // Define your custom 404 logic here
+  return res.statusCode(404).send(`${req.nextUrl.pathname} not found`);
+};
+
+const router = apiRouter.all(notFoundHandler);
+
+export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllMethods(router);
+```
+
+With this setup, any requests to non-existent API routes will trigger the `notFoundHandler`, allowing you to customize the `404` response according to your specific requirements.
 
 ### Example Project
 
