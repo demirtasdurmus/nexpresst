@@ -2,7 +2,7 @@
 
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
-Nexpresst is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
+**Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
 ## Features
 
@@ -127,7 +127,7 @@ export const cors: IMiddlewareHandler = async (req, res, next) => {
 
 ### Typescript Support
 
-Nexpresst leverages TypeScript to provide strong typing for both middleware and route handlers.
+**Nexpresst** leverages TypeScript to provide strong typing for both middleware and route handlers.
 
 #### Route Handler Typing
 
@@ -246,7 +246,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 
 ### Error Handling
 
-You can optionally register an `onError` middleware to your global router to handle errors gracefully.
+You can optionally register an `onError` middleware with global router to handle errors gracefully.
 
 ```ts
 // @/app/lib/middlewares/error-handler.ts
@@ -284,7 +284,7 @@ And then in your `router.ts` file:
 import { errorHandler } from '@/lib/middlewares';
 
 export const apiRouter = new Router()
-  .onError(errorHandler) // Register errorHandler middleware to your global router instance
+  .onError(errorHandler) // Register errorHandler middleware with your global router instance
   .use(middleware, anotherMiddleware); // Add other middlewares
 ```
 
