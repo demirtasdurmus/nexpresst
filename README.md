@@ -318,7 +318,7 @@ import { exportAllMethods, IRouteHandler } from 'nexpresst';
 const notFoundHandler: IRouteHandler = async (req, res) => {
   console.log(req.params); // // Access to params passed as a string[]
   // Define your custom 404 logic here
-  return res.statusCode(404).send(`${req.nextUrl.pathname} not found`);
+  return res.statusCode(404).end();
 };
 
 const router = apiRouter.all(notFoundHandler);
