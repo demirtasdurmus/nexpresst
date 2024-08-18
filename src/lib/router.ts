@@ -49,7 +49,7 @@ export class Router {
     return this.addHandler('HEAD', handler);
   }
 
-  async run(req: CustomRequest, res: CustomResponse): Promise<Response | void> {
+  async execute(req: CustomRequest, res: CustomResponse): Promise<Response | void> {
     try {
       /**
        * Execute all middlewares in sequence
