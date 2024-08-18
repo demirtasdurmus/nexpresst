@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { BodyInit, ResponseInit } from '../interfaces';
 
 export class CustomResponse<TResponseData = unknown> extends NextResponse {
+  private noBodyStatusCodes = [204, 205, 304];
   /**
    * The following private property is used to store the status code of the response.
    */
@@ -33,27 +34,16 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
     let response: NextResponse;
 
     // Handle special cases where no body should be sent
-    if (
-      (this._statusCode >= 100 && this._statusCode < 200) || // 1xx informational responses
-      this._statusCode === 204 || // No Content
-      this._statusCode === 205 || // Reset Content
-      this._statusCode === 304 // Not Modified
-    ) {
+    if (this.noBodyStatusCodes.includes(this._statusCode) || !body) {
+      // No body response
       response = new NextResponse(null, {
         status: this._statusCode,
       });
     } else {
-      if (body) {
-        // Regular JSON response
-        response = NextResponse.json(body, {
-          status: this._statusCode,
-        });
-      } else {
-        // Default to an empty response
-        response = new NextResponse(null, {
-          status: this._statusCode,
-        });
-      }
+      // Regular JSON response
+      response = NextResponse.json(body, {
+        status: this._statusCode,
+      });
     }
 
     // Set headers on the response
@@ -66,16 +56,25 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
+   * The following method sends a response with no body.
+   * @returns A NextResponse object.
+   */
+  end() {
+    // Finalize the response without a body
+    return this.send();
+  }
+
+  /**
    * This method is used to validate the status code.
    * It throws an error if the status code is not a number or is not between 100 and 599.
    */
   private validateStatusCode(statusCode: number): void {
     if (typeof statusCode !== 'number') {
-      throw new Error('Status code must be a number');
+      throw new TypeError('Status code must be a number');
     }
 
-    if (statusCode < 100 || statusCode > 599) {
-      throw new Error('Status code must be between 100 and 599');
+    if (statusCode < 200 || statusCode > 599) {
+      throw new RangeError('Status code must be between 200 and 599');
     }
   }
 }

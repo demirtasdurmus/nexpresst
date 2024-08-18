@@ -144,7 +144,7 @@ export class Router {
         if (process.env.NODE_ENV !== 'test') console.error(err);
         return new Response(
           `Internal Server Error: ${
-            (err as any).message
+            (err as any)?.message
           }\nAdd an onError middleware to the Router instance to handle errors gracefully`,
           {
             status: 500,

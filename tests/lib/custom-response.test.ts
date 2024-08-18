@@ -27,8 +27,8 @@ describe('CustomResponse', () => {
   it('should throw an error if status code is out of range', () => {
     const response = new CustomResponse();
 
-    expect(() => response.statusCode(99)).toThrow('Status code must be between 100 and 599');
-    expect(() => response.statusCode(600)).toThrow('Status code must be between 100 and 599');
+    expect(() => response.statusCode(199)).toThrow('Status code must be between 200 and 599');
+    expect(() => response.statusCode(600)).toThrow('Status code must be between 200 and 599');
   });
 
   it('should send a response with a JSON body and correct status code', () => {
@@ -85,5 +85,42 @@ describe('CustomResponse', () => {
 
     expect(emptyResponse.status).toEqual(404);
     expect(emptyResponse.body).toEqual(null);
+  });
+
+  it('should finalize the response with default status code 200 when using end()', () => {
+    const response = new CustomResponse();
+    const finalizedResponse = response.end();
+
+    expect(finalizedResponse.status).toBe(200);
+    expect(finalizedResponse.body).toBe(null);
+  });
+
+  it('should finalize the response with a custom status code when using end()', () => {
+    const response = new CustomResponse();
+    response.statusCode(404);
+    const finalizedResponse = response.end();
+
+    expect(finalizedResponse.status).toBe(404);
+    expect(finalizedResponse.body).toBe(null);
+  });
+
+  it('should apply custom headers when using end()', () => {
+    const response = new CustomResponse();
+    response.headers.set('X-Custom-Header', 'custom-value');
+    const finalizedResponse = response.end();
+
+    expect(finalizedResponse.headers.get('X-Custom-Header')).toBe('custom-value');
+  });
+
+  it('should handle special status codes correctly when using end()', () => {
+    const response = new CustomResponse();
+
+    const noContentResponse = response.statusCode(204).end();
+    expect(noContentResponse.status).toBe(204);
+    expect(noContentResponse.body).toBe(null);
+
+    const notModifiedResponse = response.statusCode(304).end();
+    expect(notModifiedResponse.status).toBe(304);
+    expect(notModifiedResponse.body).toBe(null);
   });
 });
