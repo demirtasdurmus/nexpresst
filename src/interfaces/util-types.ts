@@ -35,6 +35,17 @@ interface RequestInit extends globalThis.RequestInit {
   signal?: AbortSignal;
 }
 
+export interface ResponseInit extends globalThis.ResponseInit {
+  nextConfig?: {
+    basePath?: string;
+    i18n?: I18NConfig;
+    trailingSlash?: boolean;
+  };
+  url?: string;
+}
+
+export type BodyInit = any;
+
 /**
  * This is a custom interface extending the Next RequestInit interface.
  * It is used to provide additional information to the custom request object.
