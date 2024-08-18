@@ -68,3 +68,7 @@ export type NextHandler = () => ValueOrPromise<any>;
 export type TNextContext = {
   params?: Record<string, string>;
 };
+
+export type HttpMethodHandlers<Req extends Request> = {
+  [M in HttpMethod]: (req: Req, ctx: TNextContext) => ValueOrPromise<any>;
+};

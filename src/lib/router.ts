@@ -15,40 +15,86 @@ export class Router {
     return this;
   }
 
+  /**
+   * Add an error handler to the router instance
+   * It will be executed when an error occurs during the execution of the middlewares or route handlers
+   */
   onError(handler: IMiddlewareHandler<any, any, any, any, any>) {
     this.errorHandler = handler;
     return this;
   }
 
+  /**
+   * Add a middleware to the router instance
+   * It will be used to register a middleware that will be executed before the route handler
+   */
   use(...middlewares: IMiddlewareHandler<any, any, any, any, any>[]) {
     this.middlewares.push(...middlewares);
     return this;
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the GET method
+   */
   get(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('GET', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the POST method
+   */
   post(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('POST', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the PUT method
+   */
   put(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('PUT', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the PATCH method
+   */
   patch(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('PATCH', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the DELETE method
+   */
   delete(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('DELETE', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for the HEAD method
+   */
   head(handler: IRouteHandler<any, any, any, any, any>) {
     return this.addHandler('HEAD', handler);
   }
 
+  /**
+   * Add a route handler to the router instance
+   * It will be used to register a route handler for all the HTTP methods
+   */
+  all(handler: IRouteHandler<any, any, any, any, any>) {
+    this.get(handler).post(handler).put(handler).patch(handler).delete(handler).head(handler);
+    return this;
+  }
+
+  /**
+   * Execute the middlewares and route handlers
+   * The main function of the router instance, used to execute the middlewares and route handlers
+   * And handle the errors that occur during the execution
+   */
   async execute(req: CustomRequest, res: CustomResponse): Promise<Response | void> {
     try {
       /**
@@ -83,7 +129,7 @@ export class Router {
         return await handler(req, res);
       } else {
         throw new Error(
-          '*No http method is matched with the incoming request\n*Please check you are appending the correct http method you router instance',
+          'No HTTP method is matched with the incoming request\n*Please make sure you are registering your handler with the correct method in the router instance',
         );
       }
     } catch (err) {
