@@ -9,6 +9,8 @@ on:
       - release
       - main
 
+  workflow_dispatch:
+
 jobs:
   pipeline:
     runs-on: ubuntu-latest
