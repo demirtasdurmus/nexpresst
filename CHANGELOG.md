@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+## [1.1.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.1.0...v1.1.1) (2024-08-18)
+
+
+### Bug Fixes
+
+* fix empty body json parsing problem when send for normal status codes ([#10](https://github.com/demirtasdurmus/nexpresst/issues/10)) ([529172f](https://github.com/demirtasdurmus/nexpresst/commit/529172fc03b68e431c9531ccb7de7b0a631d4a4b))
+
 # [1.1.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.0.0...v1.1.0) (2024-08-18)
 
 
