@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.2.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.1.1...v1.2.0-rc.1) (2024-08-18)
+
+
+### Features
+
+* add end method to the custom response class ([#11](https://github.com/demirtasdurmus/nexpresst/issues/11)) ([c2b1a8c](https://github.com/demirtasdurmus/nexpresst/commit/c2b1a8c03e593c1aaa2bcd24869eeb79e76eea16))
+
 ## [1.1.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.1.0...v1.1.1) (2024-08-18)
 
 
