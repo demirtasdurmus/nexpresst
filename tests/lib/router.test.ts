@@ -1,4 +1,4 @@
-import { CustomRequest, CustomResponse, Router } from '../../src';
+import { CustomRequest, CustomResponse, HttpMethod, Router } from '../../src';
 
 describe('Router', () => {
   it('should execute middleware in sequence and return response from middleware', async () => {
@@ -23,20 +23,68 @@ describe('Router', () => {
   it('should execute the correct route handler based on method', async () => {
     const router = new Router();
 
-    const mockHandler = vi.fn((req, res) => {
+    const mockGetHandler = vi.fn((req, res) => {
       return res.statusCode(200).send({ message: 'GET Response' });
     });
+    const mockPostHandler = vi.fn((req, res) => {
+      return res.statusCode(201).send({ message: 'POST Response' });
+    });
+    const mockPutHandler = vi.fn((req, res) => {
+      return res.statusCode(200).send({ message: 'PUT Response' });
+    });
+    const mockPatchHandler = vi.fn((req, res) => {
+      return res.statusCode(200).send({ message: 'PATCH Response' });
+    });
+    const mockDeleteHandler = vi.fn((req, res) => {
+      return res.statusCode(204).send();
+    });
 
-    router.get(mockHandler);
+    router
+      .get(mockGetHandler)
+      .post(mockPostHandler)
+      .put(mockPutHandler)
+      .patch(mockPatchHandler)
+      .delete(mockDeleteHandler);
 
-    const req = { method: 'GET' } as CustomRequest;
-    const res = new CustomResponse();
+    const reqGet = { method: 'GET' } as CustomRequest;
+    const resGet = new CustomResponse();
 
-    const response = await router.execute(req, res);
+    const reqPost = { method: 'POST' } as CustomRequest;
+    const resPost = new CustomResponse();
 
-    expect(mockHandler).toHaveBeenCalledOnce();
-    expect(response!.status).toEqual(200);
-    expect(await response!.json()).toEqual({ message: 'GET Response' });
+    const reqPut = { method: 'PUT' } as CustomRequest;
+    const resPut = new CustomResponse();
+
+    const reqPatch = { method: 'PATCH' } as CustomRequest;
+    const resPatch = new CustomResponse();
+
+    const reqDelete = { method: 'DELETE' } as CustomRequest;
+    const resDelete = new CustomResponse();
+
+    const responseGet = await router.execute(reqGet, resGet);
+    const responsePost = await router.execute(reqPost, resPost);
+    const responsePut = await router.execute(reqPut, resPut);
+    const responsePatch = await router.execute(reqPatch, resPatch);
+    const responseDelete = await router.execute(reqDelete, resDelete);
+
+    expect(mockGetHandler).toHaveBeenCalledOnce();
+    expect(responseGet!.status).toEqual(200);
+    expect(await responseGet!.json()).toEqual({ message: 'GET Response' });
+
+    expect(mockPostHandler).toHaveBeenCalledOnce();
+    expect(responsePost!.status).toEqual(201);
+    expect(await responsePost!.json()).toEqual({ message: 'POST Response' });
+
+    expect(mockPutHandler).toHaveBeenCalledOnce();
+    expect(responsePut!.status).toEqual(200);
+    expect(await responsePut!.json()).toEqual({ message: 'PUT Response' });
+
+    expect(mockPatchHandler).toHaveBeenCalledOnce();
+    expect(responsePatch!.status).toEqual(200);
+    expect(await responsePatch!.json()).toEqual({ message: 'PATCH Response' });
+
+    expect(mockDeleteHandler).toHaveBeenCalledOnce();
+    expect(responseDelete!.status).toEqual(204);
   });
 
   it('should throw an error if no handler matches the request method', async () => {
@@ -49,7 +97,7 @@ describe('Router', () => {
 
     expect(response!.status).toEqual(500);
     expect(await response!.text()).toEqual(
-      'Internal Server Error: *No http method is matched with the incoming request\n*Please check you are appending the correct http method you router instance\nAdd an onError middleware to the Router instance to handle errors gracefully',
+      'Internal Server Error: No HTTP method is matched with the incoming request\n*Please make sure you are registering your handler with the correct method in the router instance\nAdd an onError middleware to the Router instance to handle errors gracefully',
     );
   });
 
@@ -94,5 +142,28 @@ describe('Router', () => {
     expect(secondMiddleware).toHaveBeenCalledOnce();
     expect(response!.status).toEqual(200);
     expect(await response!.json()).toEqual({ message: 'Final Middleware' });
+  });
+
+  it('should handle the all method correctly for all HTTP methods', async () => {
+    const router = new Router();
+
+    const mockAllHandler = vi.fn((req, res) => {
+      return res.statusCode(200).send({ message: 'ALL Response' });
+    });
+
+    router.all(mockAllHandler);
+
+    const methods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'];
+
+    for (const method of methods) {
+      const req = { method } as CustomRequest;
+      const res = new CustomResponse();
+
+      const response = await router.execute(req, res);
+
+      expect(mockAllHandler).toHaveBeenCalledWith(req, res);
+      expect(response!.status).toEqual(200);
+      expect(await response!.json()).toEqual({ message: 'ALL Response' });
+    }
   });
 });
