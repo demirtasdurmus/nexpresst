@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.1.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.0.0...v1.1.0) (2024-08-18)
+
+
+### Features
+
+* add all method to router and export all methods util function ([baf4765](https://github.com/demirtasdurmus/nexpresst/commit/baf47653e230514c7f3eb84dc614914eddc4a946))
+
 # [1.1.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.0.0...v1.1.0-rc.1) (2024-08-18)
 
 
