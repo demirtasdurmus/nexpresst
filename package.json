@@ -1,18 +1,24 @@
 {
-  "name": "nextpress",
-  "version": "1.0.0",
+  "name": "nexpresst",
+  "version": "1.0.0-rc.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/demirtasdurmus/nextpress.git"
+    "url": "git+https://github.com/demirtasdurmus/nexpresst.git"
   },
   "bugs": {
-    "url": "https://github.com/demirtasdurmus/nextpress/issues"
+    "url": "https://github.com/demirtasdurmus/nexpresst/issues"
   },
-  "homepage": "https://github.com/demirtasdurmus/nextpress#readme",
-  "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/demirtasdurmus/nexpresst#readme",
+  "keywords": [
+    "next.js",
+    "express",
+    "serverless",
+    "api",
+    "typescript"
+  ],
+  "author": "Durmus Demirtas",
   "license": "ISC",
   "description": "Write express-like APIs with Next.js serverless functions",
   "scripts": {
@@ -23,6 +29,7 @@
     "dev": "npm run dev:tsc & npm run dev:node",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint": "eslint --fix .",
     "prepare": "husky"
   },
   "devDependencies": {

@@ -7,10 +7,10 @@ export interface IRouteHandler<
   TQuery = unknown,
   TPayload = unknown,
   TResponseData = unknown,
-  TUser = unknown,
+  TSession = unknown,
 > {
   (
-    req: CustomRequest<TParams, TQuery, TPayload, TUser>,
+    req: CustomRequest<TParams, TQuery, TPayload, TSession>,
     res: CustomResponse<TResponseData>,
   ): Promise<NextResponse<TResponseData>>;
 }

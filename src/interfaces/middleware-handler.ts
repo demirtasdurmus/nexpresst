@@ -8,10 +8,10 @@ export interface IMiddlewareHandler<
   TQuery = unknown,
   TPayload = unknown,
   TResponseData = unknown,
-  TUser = unknown,
+  TSession = unknown,
 > {
   (
-    req: CustomRequest<TParams, TQuery, TPayload, TUser>,
+    req: CustomRequest<TParams, TQuery, TPayload, TSession>,
     res: CustomResponse<TResponseData>,
     next: NextHandler,
   ): Promise<NextResponse<TResponseData> | void>;

@@ -49,7 +49,7 @@ export class Router {
     return this.addHandler('HEAD', handler);
   }
 
-  async run(req: CustomRequest, res: CustomResponse): Promise<Response | void> {
+  async execute(req: CustomRequest, res: CustomResponse): Promise<Response | void> {
     try {
       /**
        * Execute all middlewares in sequence
@@ -95,7 +95,7 @@ export class Router {
       if (this.errorHandler) {
         return this.errorHandler(req, res, () => Promise.reject(err));
       } else {
-        console.error(err);
+        if (process.env.NODE_ENV !== 'test') console.error(err);
         return new Response(
           `Internal Server Error: ${
             (err as any).message
@@ -108,16 +108,3 @@ export class Router {
     }
   }
 }
-
-// private routes: Map<Method, Map<RouteMatch, RequestHandler<Req, Res>>> = new Map();
-
-// public add(method: Method, path: string, handler: RequestHandler<Req, Res>) {
-//   if (!this.routes.has(method)) {
-//     this.routes.set(method, new Map());
-//   }
-//   this.routes.get(method)!.set(path, handler);
-// }
-
-// public find(method: Method, path: string): RequestHandler<Req, Res> | undefined {
-//   return this.routes.get(method)?.get(path);
-// }

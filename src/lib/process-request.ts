@@ -23,11 +23,11 @@ export function processRequest<Req extends Request = Request>(
     referrer: req.referrer,
     referrerPolicy: req.referrerPolicy,
     signal: req.signal,
-    ...(req.body ? { duplex: 'half' } : {}),
     params: context.params || {},
+    ...(req.body ? { duplex: 'half' } : {}), // Enable duplex mode if body is present
   });
 
   const customRes = new CustomResponse();
 
-  return router.run(customReq, customRes) as Promise<NextResponse<unknown>>;
+  return router.execute(customReq, customRes) as Promise<NextResponse<unknown>>;
 }
