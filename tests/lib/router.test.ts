@@ -16,7 +16,7 @@ describe('Router', () => {
     const response = await router.run(req, res);
 
     expect(mockMiddleware).toHaveBeenCalledOnce();
-    expect(response!.status).toBe(200);
+    expect(response!.status).toEqual(200);
     expect(await response!.json()).toEqual({ message: 'Middleware Response' });
   });
 
@@ -35,7 +35,7 @@ describe('Router', () => {
     const response = await router.run(req, res);
 
     expect(mockHandler).toHaveBeenCalledOnce();
-    expect(response!.status).toBe(200);
+    expect(response!.status).toEqual(200);
     expect(await response!.json()).toEqual({ message: 'GET Response' });
   });
 
@@ -47,7 +47,7 @@ describe('Router', () => {
 
     const response = await router.run(req, res);
 
-    expect(response!.status).toBe(500);
+    expect(response!.status).toEqual(500);
     expect(await response!.text()).toEqual(
       'Internal Server Error: *No http method is matched with the incoming request\n*Please check you are appending the correct http method you router instance\nAdd an onError middleware to the Router instance to handle errors gracefully',
     );
@@ -68,7 +68,7 @@ describe('Router', () => {
     const response = await router.run(req, res);
 
     expect(errorHandler).toHaveBeenCalledOnce();
-    expect(response!.status).toBe(500);
+    expect(response!.status).toEqual(500);
     expect(await response!.json()).toEqual({ error: 'Error caught' });
   });
 
@@ -92,7 +92,7 @@ describe('Router', () => {
 
     expect(firstMiddleware).toHaveBeenCalledOnce();
     expect(secondMiddleware).toHaveBeenCalledOnce();
-    expect(response!.status).toBe(200);
+    expect(response!.status).toEqual(200);
     expect(await response!.json()).toEqual({ message: 'Final Middleware' });
   });
 });
