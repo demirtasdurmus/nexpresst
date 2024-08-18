@@ -49,7 +49,7 @@ You can use your custom implementations if you prefer, but these are solid start
 
 ### Creating API Routes
 
-Define route handlers using the IRouteHandler interface.
+Define route handlers using the `IRouteHandler` interface.
 
 To use these handlers, register them with the global router instance using the corresponding HTTP methods (e.g., `get()` for GET requests, `post()` for POST requests, etc.). Then, pass the router to the `processRequest` function inside the Next.js HTTP method function.
 
@@ -264,7 +264,7 @@ const errorHandler: IMiddlewareHandler<unknown, unknown, unknown, TErrorResponse
   return next().catch((err: unknown) => {
     /**
      * This is just a simple demonstration of how to handle errors.
-     * Add your custom error logging and response handling here.
+     * Add your custom error logging and response handling logic here.
      */
     if (err instanceof Error) {
       return res.statusCode(500).send({ name: err.name, message: err.message });
