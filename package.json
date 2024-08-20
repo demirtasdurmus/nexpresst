@@ -19,7 +19,7 @@
     "typescript"
   ],
   "author": "Durmus Demirtas",
-  "license": "ISC",
+  "license": "MIT",
   "description": "Write express-like APIs with Next.js serverless functions",
   "scripts": {
     "build": "tsc --pretty -p tsconfig.build.json",

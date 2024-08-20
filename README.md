@@ -1,6 +1,6 @@
 # Nexpresst 🚀
 
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml) [![npm](https://img.shields.io/npm/dm/nexpresst)](https://www.npmjs.com/package/nexpresst)
 
 **Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
@@ -54,7 +54,7 @@ Define route handlers using the `IRouteHandler` interface.
 
 To use these handlers, register them with the global router instance using the corresponding HTTP methods (e.g., `get()` for GET requests, `post()` for POST requests, etc.). Then, pass the router to the `processRequest` function inside the Next.js HTTP method function.
 
-🔺 **Note:** You must still use the export `function GET...` syntax because it is a **strict requirement** by Next.js.
+🔺 **Note:** You must still export a function with a valid HTTP method name such as `GET`, `POST` etc. from your `route.ts` file. Because it is a **strict requirement** by Next.js.
 
 **Example:** Handling GET Requests
 
