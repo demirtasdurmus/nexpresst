@@ -3,6 +3,9 @@ import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
 import { IMiddlewareHandler, IRouteHandler, HttpMethod } from '../interfaces';
 
+/**
+ * TODO: Deprecate this class when the RouterV2 class is ready in version 2.0.0
+ */
 export class Router {
   private middlewares: IMiddlewareHandler<any, any, any, any, any>[] = [];
 
