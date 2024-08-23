@@ -83,7 +83,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 }
 ```
 
-You can handle all other HTTP methods with the below syntax.
+You can handle all other HTTP methods with the above syntax.
 
 ### Creating Middleware
 
