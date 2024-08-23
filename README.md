@@ -21,9 +21,9 @@ npm install nexpresst
 
 ## Getting Started
 
-⚠️ Breaking Change Notice: Version 2 Migration
+<!-- ⚠️ Breaking Change Notice: Version 2 Migration
 
-Version 2 introduces significant changes to the routing API, including the shift from `Router` to `RouterV2`. If you're upgrading from Version 1, please refer to the [Migration Guide: Version 1 to Version 2](./docs/migrations/v1-to-v2.md) for detailed instructions.
+Version 2 introduces significant changes to the routing API, including the shift from `Router` to `RouterV2`. If you're upgrading from Version 1, please refer to the [Migration Guide: Version 1 to Version 2](./docs/migrations/v1-to-v2.md) for detailed instructions. -->
 
 ### Setting Up the Router
 
@@ -299,7 +299,7 @@ With this setup, any requests to non-existent API routes will trigger the `notFo
 
 <!-- TODO: Update the example repo url to point the main branch when the stable version is released -->
 
-For a full example, check out the [GitHub repository](https://github.com/demirtasdurmus/example-nextjs-api-with-nexpresst/tree/v2) with a complete implementation.
+For a full example, check out the [GitHub repository](https://github.com/demirtasdurmus/example-nextjs-api-with-nexpresst/tree/release) with a complete implementation.
 
 ## Contributing
 
