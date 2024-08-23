@@ -3,7 +3,8 @@ import { processRequest } from './process-request';
 import { Router } from './router';
 
 /**
- * TODO: Deprecate this function when the exportAllMethodsV2 function is ready in version 2.0.0
+ * @deprecated
+ * This function is deprecated and will be removed in the next major version.
  */
 export function exportAllMethods<Req extends Request, Ctx extends TNextContext>(
   router: Router,

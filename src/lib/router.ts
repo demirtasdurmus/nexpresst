@@ -4,7 +4,8 @@ import { CustomResponse } from './custom-response';
 import { IMiddlewareHandler, IRouteHandler, HttpMethod } from '../interfaces';
 
 /**
- * TODO: Deprecate this class when the RouterV2 class is ready in version 2.0.0
+ * @deprecated
+ * This class is deprecated and will be removed in the next major version.
  */
 export class Router {
   private middlewares: IMiddlewareHandler<any, any, any, any, any>[] = [];
