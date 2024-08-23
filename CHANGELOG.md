@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.3.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.2.1...v1.3.0-rc.1) (2024-08-23)
+
+
+### Features
+
+* simplify router and handler usage ([#15](https://github.com/demirtasdurmus/nexpresst/issues/15)) ([6fb15ec](https://github.com/demirtasdurmus/nexpresst/commit/6fb15ec586f1aa0786422bff85168119b001c887))
+
 ## [1.2.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.2.0...v1.2.1) (2024-08-18)
 
 
