@@ -3,6 +3,10 @@ import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
 import { IMiddlewareHandler, IRouteHandler, HttpMethod } from '../interfaces';
 
+/**
+ * @deprecated
+ * This class is deprecated and will be removed in the next major version.
+ */
 export class Router {
   private middlewares: IMiddlewareHandler<any, any, any, any, any>[] = [];
 

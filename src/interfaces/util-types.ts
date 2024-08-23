@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { RouterV2 } from '../lib';
+
 /**
  * The following interfaces are taken from the Next.js source code.
  * They are used to provide type information for the custom request and response objects.
@@ -69,6 +71,8 @@ export type TNextContext = {
   params?: Record<string, string>;
 };
 
-export type HttpMethodHandlers<Req extends Request> = {
-  [M in HttpMethod]: (req: Req, ctx: TNextContext) => ValueOrPromise<any>;
+export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext> = {
+  [M in HttpMethod]: (req: Req, ctx: Ctx) => ValueOrPromise<any>;
 };
+
+export type ApiRouterV2Factory<Req, Ctx> = (req: Req, ctx: Ctx) => RouterV2;
