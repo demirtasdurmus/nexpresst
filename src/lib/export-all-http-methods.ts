@@ -1,7 +1,7 @@
-import { HttpMethodHandlers, IRouteHandler, ApiRouterV2Factory, TNextContext } from '../interfaces';
+import { HttpMethodHandlers, IRouteHandler, ApiRouterFactory, TNextContext } from '../interfaces';
 
-export function exportAllMethodsV2<Req extends Request, Ctx extends TNextContext>(
-  apiRouter: ApiRouterV2Factory<Req, Ctx>,
+export function exportAllHttpMethods<Req extends Request, Ctx extends TNextContext>(
+  apiRouter: ApiRouterFactory<Req, Ctx>,
   handler: IRouteHandler,
 ): HttpMethodHandlers<Req, Ctx> {
   return {

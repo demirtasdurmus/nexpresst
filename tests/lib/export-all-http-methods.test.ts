@@ -1,6 +1,12 @@
-import { exportAllMethodsV2, HttpMethod, IRouteHandler, RouterV2, TNextContext } from '../../src';
+import {
+  exportAllHttpMethods,
+  HttpMethod,
+  IRouteHandler,
+  ApiRouter,
+  TNextContext,
+} from '../../src';
 
-describe('exportAllMethodsV2', () => {
+describe('exportAllHttpMethods', () => {
   const mockRequest = new Request('http://localhost/api/test', {
     method: 'GET',
     headers: new Headers(),
@@ -29,8 +35,8 @@ describe('exportAllMethodsV2', () => {
     ['HEAD', 'HEAD'] as HttpMethod[],
   ])('should call %s method, run middleware and execute handler', async (method: HttpMethod) => {
     const apiRouterFactory = (req: Request, ctx: TNextContext) =>
-      new RouterV2(req, ctx).use(mockMiddleware);
-    const apiMethods = exportAllMethodsV2(apiRouterFactory, mockHandler as IRouteHandler);
+      new ApiRouter(req, ctx).use(mockMiddleware);
+    const apiMethods = exportAllHttpMethods(apiRouterFactory, mockHandler as IRouteHandler);
 
     const res = await apiMethods[method](mockRequest, mockContext);
 

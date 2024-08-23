@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { RouterV2 } from '../lib';
+import { ApiRouter } from '../lib';
 
 /**
  * The following interfaces are taken from the Next.js source code.
@@ -75,4 +75,4 @@ export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext> = 
   [M in HttpMethod]: (req: Req, ctx: Ctx) => ValueOrPromise<any>;
 };
 
-export type ApiRouterV2Factory<Req, Ctx> = (req: Req, ctx: Ctx) => RouterV2;
+export type ApiRouterFactory<Req, Ctx> = (req: Req, ctx: Ctx) => ApiRouter;
