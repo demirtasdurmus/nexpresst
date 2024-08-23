@@ -6,6 +6,7 @@ import { IMiddlewareHandler, IRouteHandler, HttpMethod } from '../interfaces';
 /**
  * @deprecated
  * This class is deprecated and will be removed in the next major version.
+ * Use RouterV2 instead.
  */
 export class Router {
   private middlewares: IMiddlewareHandler<any, any, any, any, any>[] = [];
