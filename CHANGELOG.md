@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+## [1.3.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.0...v1.3.1) (2024-08-23)
+
+
+### Bug Fixes
+
+* remove unnecessary project dependency ([#21](https://github.com/demirtasdurmus/nexpresst/issues/21)) ([7fe3bed](https://github.com/demirtasdurmus/nexpresst/commit/7fe3bedeb3dc4193e4445a5ad2e7bf277b879ee1))
+
 # [1.3.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.2.1...v1.3.0) (2024-08-23)
 
 
