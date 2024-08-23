@@ -4,6 +4,10 @@ import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
 import { Router } from './router';
 
+/**
+ * @deprecated
+ * This function is deprecated and will be removed in the next major version.
+ */
 export function processRequest<Req extends Request = Request>(
   req: Req,
   context: TNextContext,
