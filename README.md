@@ -23,19 +23,19 @@ npm install nexpresst
 
 <!-- ⚠️ Breaking Change Notice: Version 2 Migration
 
-Version 2 introduces significant changes to the routing API, including the shift from `Router` to `RouterV2`. If you're upgrading from Version 1, please refer to the [Migration Guide: Version 1 to Version 2](./docs/migrations/v1-to-v2.md) for detailed instructions. -->
+Version 2 introduces significant changes to the routing API, including the shift from `Router` to `ApiRouter`. If you're upgrading from Version 1, please refer to the [Migration Guide: Version 1 to Version 2](./docs/migrations/v1-to-v2.md) for detailed instructions. -->
 
 ### Setting Up the Router
 
-Start by creating a function dynamically generating a router instance in your Next.js application. This function will serve as the central point for managing routes and applying global middleware.
+Start by creating a function dynamically generating an apiRouter instance in your Next.js application. This function will serve as the central point for managing routes and applying global middleware.
 
 ```ts
-// @/app/lib/router.ts
+// @/app/lib/api-router.ts
 
 import { NextRequest } from 'next/server';
-import { RouterV2, TNextContext } from 'nexpresst';
+import { ApiRouter, TNextContext } from 'nexpresst';
 
-export const apiRouter = (req: NextRequest, ctx: TNextContext) => new RouterV2(req, ctx);
+export const apiRouter = (req: NextRequest, ctx: TNextContext) => new ApiRouter(req, ctx);
 ```
 
 You can optionally add global middleware using the `.use()` method.
@@ -43,8 +43,11 @@ You can optionally add global middleware using the `.use()` method.
 Since Next.js does not parse request bodies out of the box, `nexpresst` provides ready-to-use middleware to handle such scenarios.
 
 ```ts
+import { NextRequest } from 'next/server';
+import { ApiRouter, TNextContext, queryParser, jsonParser } from 'nexpresst';
+
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx)
+  new ApiRouter(req, ctx)
     .use(queryParser) // Appends a query object to the request, accessible via `req.query`
     .use(jsonParser); // Parses the request body as JSON, accessible via `req.payload`
 ```
@@ -64,7 +67,7 @@ To use these handlers, pass them to the `handle()` method of the `apiRouter` ins
 ```ts
 // @/app/api/posts/route.ts
 
-import { apiRouter } from '@/lib/router';
+import { apiRouter } from '@/lib/api-router';
 import { NextRequest } from 'next/server';
 import { IRouteHandler, TNextContext } from 'nexpresst';
 
@@ -114,15 +117,15 @@ You can create custom global middleware and register it with your global router 
 **Example:** Global Usage
 
 ```ts
-// @/app/lib/router.ts
+// @/app/lib/api-router.ts
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(cors).use(otherMiddleware);
+  new ApiRouter(req, ctx).use(cors).use(otherMiddleware);
 
 // Alternatively, you can use the following syntax for registering middleware
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(cors, otherMiddleware);
+  new ApiRouter(req, ctx).use(cors, otherMiddleware);
 ```
 
 These two middleware will be applied to all incoming requests.
@@ -147,16 +150,16 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 
 These two middleware will only be applied to this specific routes.
 
-ℹ️ Note that you can always create multiple instances of the RouterV2 class with different configurations, allowing you to register each instance with different middleware for more fine-tuned control.
+ℹ️ Note that you can always create multiple instances of the ApiRouter class with different configurations, allowing you to register each instance with different middleware for more fine-tuned control.
 
 ```ts
-// @/app/lib/router.ts
+// @/app/lib/api-router.ts
 
 export const protectedRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(cors).use(protect);
+  new ApiRouter(req, ctx).use(cors).use(protect);
 
 export const publicRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(cors);
+  new ApiRouter(req, ctx).use(cors);
 ```
 
 Then, use the corresponding router instance in your relevant routes as follows:
@@ -164,7 +167,7 @@ Then, use the corresponding router instance in your relevant routes as follows:
 ```ts
 // @/app/api/users/posts/route.ts
 
-import { protectedRouter } from '@/app/lib/router';
+import { protectedRouter } from '@/app/lib/api-router';
 
 // Users are only allowed to see their own posts
 export function GET(req: NextRequest, ctx: TNextContext) {
@@ -175,7 +178,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 ```ts
 // @/app/api/posts/route.ts
 
-import { publicRouter } from '@/app/lib/router';
+import { publicRouter } from '@/app/lib/api-router';
 
 // Everyone can see the posts
 export function GET(req: NextRequest, ctx: TNextContext) {
@@ -278,15 +281,15 @@ const errorHandler: IMiddlewareHandler<unknown, unknown, unknown, TErrorResponse
 };
 ```
 
-And then in your `router.ts` file:
+And then in your `api-router.ts` file:
 
 ```ts
-// @/app/lib/router.ts
+// @/app/lib/api-router.ts
 
 import { errorHandler } from '@/lib/middlewares';
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx)
+  new ApiRouter(req, ctx)
     .onError(errorHandler) // Register errorHandler middleware with your global router instance
     .use(middleware, anotherMiddleware); // Add other middlewares
 ```
@@ -315,8 +318,8 @@ To address this issue, start by creating a [catch-all](https://nextjs.org/docs/a
 In the `[[...params]]/route.ts` file, add the following code:
 
 ```ts
-import { apiRouter } from '@/lib/router';
-import { exportAllMethodsV2, IRouteHandler } from 'nexpresst';
+import { apiRouter } from '@/lib/api-router';
+import { exportAllHttpMethods, IRouteHandler } from 'nexpresst';
 
 const notFoundHandler: IRouteHandler = async (req, res) => {
   console.log(req.params); // // Access to params passed as a string[]
@@ -324,7 +327,7 @@ const notFoundHandler: IRouteHandler = async (req, res) => {
   return res.statusCode(404).end();
 };
 
-export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllMethodsV2(
+export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllHttpMethods(
   apiRouter,
   notFoundHandler,
 );

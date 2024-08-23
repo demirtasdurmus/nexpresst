@@ -5,7 +5,7 @@ import { Router } from './router';
 /**
  * @deprecated
  * This function is deprecated and will be removed in the next major version.
- * Use exportAllMethodsV2 instead.
+ * Use exportAllHttpMethods function instead.
  */
 export function exportAllMethods<Req extends Request, Ctx extends TNextContext>(
   router: Router,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RouterV2 } from '../../src';
+import { ApiRouter } from '../../src';
 
-describe('routerV2', () => {
+describe('ApiRouter', () => {
   const mockRequest = new Request('http://localhost/api/test', {
     method: 'GET',
     headers: new Headers(),
@@ -22,13 +22,13 @@ describe('routerV2', () => {
   };
 
   it('should initialize an instance with custom request and response correctly', () => {
-    const router = new RouterV2(mockRequest, mockContext);
+    const router = new ApiRouter(mockRequest, mockContext);
 
-    expect(router).toBeInstanceOf(RouterV2);
+    expect(router).toBeInstanceOf(ApiRouter);
   });
 
   it('should execute middlewares in sequence and stop if middleware returns a response', async () => {
-    const router = new RouterV2(mockRequest, mockContext);
+    const router = new ApiRouter(mockRequest, mockContext);
     const middleware = vi.fn((req, res) => {
       return res.statusCode(404).send({ message: 'Not Found!' });
     });
@@ -48,7 +48,7 @@ describe('routerV2', () => {
   });
 
   it('should execute handler if no middleware returns a response', async () => {
-    const router = new RouterV2(mockRequest, mockContext);
+    const router = new ApiRouter(mockRequest, mockContext);
 
     const middleware = vi.fn((req, res, next) => next());
     const handler = vi.fn((req, res) => res.statusCode(200).send({ message: 'OK' }));
@@ -64,7 +64,7 @@ describe('routerV2', () => {
   });
 
   it('should execute error handler if error occurs', async () => {
-    const router = new RouterV2(mockRequest, mockContext);
+    const router = new ApiRouter(mockRequest, mockContext);
     const errorHandler = vi.fn((req, res, next) =>
       res.statusCode(500).send({ name: 'Error', message: 'Something went wrong' }),
     );
@@ -83,7 +83,7 @@ describe('routerV2', () => {
   });
 
   it('should return 500 response if no error handler is provided', async () => {
-    const router = new RouterV2(mockRequest, mockContext);
+    const router = new ApiRouter(mockRequest, mockContext);
     const middleware = vi.fn((req, res, next) => {
       throw new Error('Middleware Error');
     });

@@ -3,7 +3,7 @@ import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
 import { IMiddlewareHandler, IRouteHandler, TNextContext } from '../interfaces';
 
-export class RouterV2<Req extends Request = Request, Ctx extends TNextContext = TNextContext> {
+export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext = TNextContext> {
   private customRequest: CustomRequest;
 
   private customResponse: CustomResponse = new CustomResponse();
