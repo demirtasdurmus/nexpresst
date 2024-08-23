@@ -1,6 +1,6 @@
 # Nexpresst 🚀
 
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml) [![npm](https://img.shields.io/npm/dm/nexpresst)](https://www.npmjs.com/package/nexpresst)
+[![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![npm](https://img.shields.io/npm/dm/nexpresst)](https://www.npmjs.com/package/nexpresst) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml)
 
 **Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
@@ -21,6 +21,10 @@ npm install nexpresst
 
 ## Getting Started
 
+⚠️ Breaking Change Notice: Version 2 Migration
+
+Version 2 introduces significant changes to the routing API, including the shift from `Router` to `RouterV2`. If you're upgrading from Version 1, please refer to the [Migration Guide: Version 1 to Version 2](./docs/migrations/v1-to-v2.md) for detailed instructions.
+
 ### Setting Up the Router
 
 Start by creating a function dynamically generating a router instance in your Next.js application. This function will serve as the central point for managing routes and applying global middleware.
@@ -28,9 +32,10 @@ Start by creating a function dynamically generating a router instance in your Ne
 ```ts
 // @/app/lib/router.ts
 
-import { Router } from 'nexpresst';
+import { NextRequest } from 'next/server';
+import { RouterV2, TNextContext } from 'nexpresst';
 
-export const apiRouter = () => new Router();
+export const apiRouter = (req: NextRequest, ctx: TNextContext) => new RouterV2(req, ctx);
 ```
 
 You can optionally add global middleware using the `.use()` method.
@@ -38,10 +43,8 @@ You can optionally add global middleware using the `.use()` method.
 Since Next.js does not parse request bodies out of the box, `nexpresst` provides ready-to-use middleware to handle such scenarios.
 
 ```ts
-import { Router, queryParser, jsonParser } from 'nexpresst';
-
-export const apiRouter = () =>
-  new Router()
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx)
     .use(queryParser) // Appends a query object to the request, accessible via `req.query`
     .use(jsonParser); // Parses the request body as JSON, accessible via `req.payload`
 ```
@@ -52,18 +55,18 @@ You can use your custom implementations if you prefer, but these are solid start
 
 Define route handlers using the `IRouteHandler` interface.
 
-To use these handlers, register them with the global router instance using the corresponding HTTP methods (e.g., `get()` for GET requests, `post()` for POST requests, etc.). Then, pass the router to the `processRequest` function inside the Next.js HTTP method function.
+To use these handlers, pass them to the `handle()` method of the `apiRouter` instance inside the Next.js HTTP method function by directly returning the instance.
 
 🔺 **Note:** You must still export a function with a valid HTTP method name such as `GET`, `POST` etc. from your `route.ts` file. Because it is a **strict requirement** by Next.js.
 
-**Example:** Handling GET Requests
+**Example:** Handling Requests
 
 ```ts
 // @/app/api/posts/route.ts
 
 import { apiRouter } from '@/lib/router';
 import { NextRequest } from 'next/server';
-import { IRouteHandler, processRequest, TNextContext } from 'nexpresst';
+import { IRouteHandler, TNextContext } from 'nexpresst';
 
 // Define a GET handler
 const getPostsHandler: IRouteHandler = async (req, res) => {
@@ -76,33 +79,11 @@ const getPostsHandler: IRouteHandler = async (req, res) => {
 
 // Export GET function for Next.js routing
 export function GET(req: NextRequest, ctx: TNextContext) {
-  const router = apiRouter().get(getPostsHandler);
-  return processRequest(req, ctx, router);
+  return apiRouter(req, ctx).handle(getPostsHandler);
 }
 ```
 
-**Example:** Handling POST Requests
-
-```ts
-// @/app/api/posts/route.ts
-
-import { apiRouter } from '@/lib/router';
-import { NextRequest } from 'next/server';
-import { IRouteHandler, processRequest, TNextContext } from 'nexpresst';
-
-// Define a POST handler
-const createPostHandler: IRouteHandler = async (req, res) => {
-  // Your logic here
-
-  return res.statusCode(201).send({ message: 'Post created' });
-};
-
-// Export POST function for Next.js routing
-export function POST(req: NextRequest, ctx: TNextContext) {
-  const router = apiRouter().post(createPostHandler);
-  return processRequest(req, ctx, router);
-}
-```
+You can handle all other HTTP methods with the below syntax.
 
 ### Creating Middleware
 
@@ -196,15 +177,13 @@ You can create custom global middleware and register it with your global router 
 ```ts
 // @/app/lib/router.ts
 
-import { myCustomGlobalMiddlewareOne, myCustomGlobalMiddlewareTwo } from '@/lib/middlewares';
-
-export const apiRouter = () =>
-  new Router().use(myCustomGlobalMiddlewareOne).use(myCustomGlobalMiddlewareTwo);
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(myCustomGlobalMiddlewareOne).use(myCustomGlobalMiddlewareTwo);
 
 // Alternatively, you can use the following syntax for registering middleware
 
-export const apiRouter = () =>
-  new Router().use(myCustomGlobalMiddlewareOne, myCustomGlobalMiddlewareTwo);
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(myCustomGlobalMiddlewareOne, myCustomGlobalMiddlewareTwo);
 ```
 
 **Example:** Route-specific Usage
@@ -212,36 +191,21 @@ export const apiRouter = () =>
 ```ts
 // @/app/api/posts/route.ts
 
-import { myCustomMiddlewareOne, myCustomMiddlewareTwo } from '@/lib/middlewares';
-
 const getPostsHandler: IRouteHandler = async (req, res) => {
   return res.statusCode(200).send({ message: 'Hello from posts' });
 };
 
 export function GET(req: NextRequest, ctx: TNextContext) {
-  const router = apiRouter()
+  return apiRouter(req, ctx)
     .use(myCustomMiddlewareOne)
     .use(myCustomMiddlewareTwo)
-    .get(getPostsHandler);
+    .handle(getPostsHandler);
 
   // Alternatively, you can use the following syntax for registering middleware
 
-  const router = apiRouter().use(myCustomMiddlewareOne, myCustomMiddlewareTwo).get(getPostsHandler);
-
-  return processRequest(req, ctx, router);
-}
-```
-
-### Process the Request
-
-Use the `processRequest` function to handle the request and pass it through the router.
-
-```ts
-// @/app/api/posts/route.ts
-
-export function GET(req: NextRequest, ctx: TNextContext) {
-  const router = apiRouter().get(getPostsHandler);
-  return processRequest(req, ctx, router);
+  return apiRouter(req, ctx)
+    .use(myCustomMiddlewareOne, myCustomMiddlewareTwo)
+    .handle(getPostsHandler);
 }
 ```
 
@@ -284,8 +248,8 @@ And then in your `router.ts` file:
 
 import { errorHandler } from '@/lib/middlewares';
 
-export const apiRouter = () =>
-  new Router()
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx)
     .onError(errorHandler) // Register errorHandler middleware with your global router instance
     .use(middleware, anotherMiddleware); // Add other middlewares
 ```
@@ -315,7 +279,7 @@ In the `[[...params]]/route.ts` file, add the following code:
 
 ```ts
 import { apiRouter } from '@/lib/router';
-import { exportAllMethods, IRouteHandler } from 'nexpresst';
+import { exportAllMethodsV2, IRouteHandler } from 'nexpresst';
 
 const notFoundHandler: IRouteHandler = async (req, res) => {
   console.log(req.params); // // Access to params passed as a string[]
@@ -323,9 +287,10 @@ const notFoundHandler: IRouteHandler = async (req, res) => {
   return res.statusCode(404).end();
 };
 
-const router = apiRouter().all(notFoundHandler);
-
-export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllMethods(router);
+export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllMethodsV2(
+  apiRouter,
+  notFoundHandler,
+);
 ```
 
 With this setup, any requests to non-existent API routes will trigger the `notFoundHandler`, allowing you to customize the `404` response according to your specific requirements.
