@@ -337,9 +337,7 @@ With this setup, any requests to non-existent API routes will trigger the `notFo
 
 ### Example Project
 
-<!-- TODO: Update the example repo url to point the main branch when the stable version is released -->
-
-For a full example, check out the [GitHub repository](https://github.com/demirtasdurmus/example-nextjs-api-with-nexpresst/tree/release) with a complete implementation.
+For a full example, check out the [GitHub repository](https://github.com/demirtasdurmus/example-nextjs-api-with-nexpresst) with a complete implementation.
 
 ## Contributing
 
