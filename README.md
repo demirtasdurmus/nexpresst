@@ -148,7 +148,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 }
 ```
 
-These two middleware will only be applied to this specific routes.
+These two middleware will only be applied to this specific route.
 
 ℹ️ Note that you can always create multiple instances of the ApiRouter class with different configurations, allowing you to register each instance with different middleware for more fine-tuned control.
 
