@@ -107,6 +107,84 @@ export const cors: IMiddlewareHandler = async (req, res, next) => {
 };
 ```
 
+### Using Middleware Globally or for Specific Routes
+
+You can create custom global middleware and register it with your global router instance to apply it to all incoming requests. Alternatively, middleware can be applied on a per-route basis.
+
+**Example:** Global Usage
+
+```ts
+// @/app/lib/router.ts
+
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(cors).use(otherMiddleware);
+
+// Alternatively, you can use the following syntax for registering middleware
+
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(cors, otherMiddleware);
+```
+
+These two middleware will be applied to all incoming requests.
+
+**Example:** Route-specific Usage
+
+```ts
+// @/app/api/posts/route.ts
+
+const getPostsHandler: IRouteHandler = async (req, res) => {
+  return res.statusCode(200).send({ message: 'Hello from posts' });
+};
+
+export function GET(req: NextRequest, ctx: TNextContext) {
+  return apiRouter(req, ctx).use(cors).use(otherMiddleware).handle(getPostsHandler);
+
+  // Alternatively, you can use the following syntax for registering middleware
+
+  return apiRouter(req, ctx).use(cors, otherMiddleware).handle(getPostsHandler);
+}
+```
+
+These two middleware will only be applied to this specific routes.
+
+ℹ️ Note that you can always create multiple instances of the RouterV2 class with different configurations, allowing you to register each instance with different middleware for more fine-tuned control.
+
+```ts
+// @/app/lib/router.ts
+
+export const protectedRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(cors).use(protect);
+
+export const publicRouter = (req: NextRequest, ctx: TNextContext) =>
+  new RouterV2(req, ctx).use(cors);
+```
+
+Then, use the corresponding router instance in your relevant routes as follows:
+
+```ts
+// @/app/api/users/posts/route.ts
+
+import { protectedRouter } from '@/app/lib/router';
+
+// Users are only allowed to see their own posts
+export function GET(req: NextRequest, ctx: TNextContext) {
+  return protectedRouter(req, ctx).handle(someProtectedHandler);
+}
+```
+
+```ts
+// @/app/api/posts/route.ts
+
+import { publicRouter } from '@/app/lib/router';
+
+// Everyone can see the posts
+export function GET(req: NextRequest, ctx: TNextContext) {
+  return publicRouter(req, ctx).handle(someProtectedHandler);
+}
+```
+
+This approach ensures that different routes are handled according to their specific middleware requirements.
+
 ### Typescript Support
 
 **Nexpresst** leverages TypeScript to provide strong typing for both middleware and route handlers.
@@ -168,47 +246,6 @@ const example: IMiddlewareHandler<
 };
 ```
 
-### Global and Route-Specific Middleware
-
-You can create custom global middleware and register it with your global router instance to apply it to all incoming requests. Alternatively, middleware can be applied on a per-route basis.
-
-**Example:** Global Usage
-
-```ts
-// @/app/lib/router.ts
-
-export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(myCustomGlobalMiddlewareOne).use(myCustomGlobalMiddlewareTwo);
-
-// Alternatively, you can use the following syntax for registering middleware
-
-export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new RouterV2(req, ctx).use(myCustomGlobalMiddlewareOne, myCustomGlobalMiddlewareTwo);
-```
-
-**Example:** Route-specific Usage
-
-```ts
-// @/app/api/posts/route.ts
-
-const getPostsHandler: IRouteHandler = async (req, res) => {
-  return res.statusCode(200).send({ message: 'Hello from posts' });
-};
-
-export function GET(req: NextRequest, ctx: TNextContext) {
-  return apiRouter(req, ctx)
-    .use(myCustomMiddlewareOne)
-    .use(myCustomMiddlewareTwo)
-    .handle(getPostsHandler);
-
-  // Alternatively, you can use the following syntax for registering middleware
-
-  return apiRouter(req, ctx)
-    .use(myCustomMiddlewareOne, myCustomMiddlewareTwo)
-    .handle(getPostsHandler);
-}
-```
-
 ### Error Handling
 
 You can optionally register an `onError` middleware with global router to handle errors gracefully.
@@ -254,7 +291,7 @@ export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
     .use(middleware, anotherMiddleware); // Add other middlewares
 ```
 
-### Catch-All route and Custom 404 Response
+### Catch-All Route and Custom 404 Response
 
 In Next.js, the file-based routing system automatically provides a default error page for requests made to non-existent endpoints. However, in modern REST APIs, relying on a generic `404` page isn't ideal.
 
