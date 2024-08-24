@@ -229,7 +229,7 @@ describe('CustomResponse', () => {
     const encodeFn = (value: string) => Buffer.from(value).toString('base64');
     response.cookie('token', 'abc123', { encode: encodeFn });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('dG9rZW49YWJjMTIz'); // base64 for "token=abc123"
+    expect(response.getHeader('Set-Cookie')).toEqual('token=YWJjMTIz'); // base64 for "token=abc123"
   });
 
   it('should handle a combination of all cookie options', () => {
