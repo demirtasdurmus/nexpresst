@@ -88,8 +88,13 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   cookie(name: string, val: any): this;
 
   cookie(name: string, val: any, options?: CookieOptions): this {
-    let cookieString = `${name}=${encodeURIComponent(val)}`;
+    // Apply the encoding function if provided, otherwise use the value as is.
+    const encodedValue = options?.encode ? options.encode(val) : val;
 
+    // Start constructing the cookie string
+    let cookieString = `${name}=${encodeURIComponent(encodedValue)}`;
+
+    // Handle cookie options
     if (options) {
       if (options.maxAge) {
         cookieString += `; Max-Age=${options.maxAge}`;
@@ -114,9 +119,6 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
       }
       if (options.sameSite) {
         cookieString += `; SameSite=${options.sameSite}`;
-      }
-      if (options.encode) {
-        cookieString = options.encode(cookieString);
       }
     }
 
