@@ -76,3 +76,15 @@ export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext> = 
 };
 
 export type ApiRouterFactory<Req, Ctx> = (req: Req, ctx: Ctx) => ApiRouter;
+
+export interface CookieOptions {
+  maxAge?: number | undefined;
+  signed?: boolean | undefined;
+  expires?: Date | undefined;
+  httpOnly?: boolean | undefined;
+  path?: string | undefined;
+  domain?: string | undefined;
+  secure?: boolean | undefined;
+  sameSite?: boolean | 'lax' | 'strict' | 'none' | undefined;
+  encode?: ((val: string) => string) | undefined;
+}

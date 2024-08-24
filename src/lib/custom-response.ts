@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
-import { BodyInit, ResponseInit } from '../interfaces';
+import { BodyInit, CookieOptions, ResponseInit } from '../interfaces';
 
 export class CustomResponse<TResponseData = unknown> extends NextResponse {
   private noBodyStatusCodes = [204, 205, 304];
@@ -72,6 +73,55 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
    */
   removeHeader(name: string): void {
     this.headers.delete(name);
+  }
+
+  /**
+   * The following method is used to set a cookie in the response header.
+   * It takes advantage of method overloading to provide different options for setting cookies.
+   * @param name The name of the cookie.
+   * @param val The value of the cookie.
+   * @param options The options for the cookie.
+   * @returns The current instance of the CustomResponse object.
+   */
+  cookie(name: string, val: string, options: CookieOptions): this;
+  cookie(name: string, val: any, options: CookieOptions): this;
+  cookie(name: string, val: any): this;
+
+  cookie(name: string, val: any, options?: CookieOptions): this {
+    let cookieString = `${name}=${encodeURIComponent(val)}`;
+
+    if (options) {
+      if (options.maxAge) {
+        cookieString += `; Max-Age=${options.maxAge}`;
+      }
+      if (options.signed) {
+        cookieString += `; Signed`;
+      }
+      if (options.expires) {
+        cookieString += `; Expires=${options.expires.toUTCString()}`;
+      }
+      if (options.httpOnly) {
+        cookieString += `; HttpOnly`;
+      }
+      if (options.path) {
+        cookieString += `; Path=${options.path}`;
+      }
+      if (options.domain) {
+        cookieString += `; Domain=${options.domain}`;
+      }
+      if (options.secure) {
+        cookieString += `; Secure`;
+      }
+      if (options.sameSite) {
+        cookieString += `; SameSite=${options.sameSite}`;
+      }
+      if (options.encode) {
+        cookieString = options.encode(cookieString);
+      }
+    }
+
+    this.setHeader('Set-Cookie', cookieString);
+    return this;
   }
 
   /**
