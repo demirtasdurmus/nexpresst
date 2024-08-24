@@ -13,6 +13,20 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
+   * This method is used to validate the status code.
+   * It throws an error if the status code is not a number or is not between 100 and 599.
+   */
+  private validateStatusCode(statusCode: number): void {
+    if (typeof statusCode !== 'number') {
+      throw new TypeError('Status code must be a number');
+    }
+
+    if (statusCode < 200 || statusCode > 599) {
+      throw new RangeError('Status code must be between 200 and 599');
+    }
+  }
+
+  /**
    * The following method is used to set the status code of the response.
    * @param statusCode The status code to be set in the response.
    * @returns The current instance of the CustomResponse object.
@@ -22,6 +36,45 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
 
     this._statusCode = statusCode;
     return this;
+  }
+
+  /**
+   * TODO: Add tests for this method
+   * Sets a header on the response object
+   * @param name - The name of the header
+   * @param value - The value of the header
+   * @returns The current instance of the CustomResponse object
+   * @example
+   * response.setHeader('Content-Type', 'application/json');
+   */
+  setHeader(name: string, value: string) {
+    // Use the headers() method from NextResponse to modify headers
+    this.headers.set(name, value);
+    return this; // Return `this` for chaining
+  }
+
+  /**
+   * TODO: Add tests for this method
+   * Retrieves a header from the response object
+   * @param name - The name of the header
+   * @returns The value of the header
+   * @example
+   * response.getHeader('Content-Type');
+   */
+  getHeader(name: string): string | null {
+    return this.headers.get(name);
+  }
+
+  /**
+   * TODO: Add tests for this method
+   * Removes a header from the response object
+   * @param name - The name of the header to remove
+   * @returns void
+   * @example
+   * response.removeHeader('Content-Type');
+   */
+  removeHeader(name: string): void {
+    this.headers.delete(name);
   }
 
   /**
@@ -62,19 +115,5 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   end() {
     // Finalize the response without a body
     return this.send();
-  }
-
-  /**
-   * This method is used to validate the status code.
-   * It throws an error if the status code is not a number or is not between 100 and 599.
-   */
-  private validateStatusCode(statusCode: number): void {
-    if (typeof statusCode !== 'number') {
-      throw new TypeError('Status code must be a number');
-    }
-
-    if (statusCode < 200 || statusCode > 599) {
-      throw new RangeError('Status code must be between 200 and 599');
-    }
   }
 }
