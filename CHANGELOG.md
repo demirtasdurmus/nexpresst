@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.4.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2024-08-24)
+
+
+### Bug Fixes
+
+* fix cookie method encode function in options ([#26](https://github.com/demirtasdurmus/nexpresst/issues/26)) ([ef95bb0](https://github.com/demirtasdurmus/nexpresst/commit/ef95bb0daafa343cf5013fb392fcf07c3dee5855))
+
 # [1.4.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2024-08-24)
 
 
