@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.4.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.1...v1.4.0-rc.1) (2024-08-24)
+
+
+### Features
+
+* add express middleware adaptor to be able to use middleware in Express.js ecosystem ([#22](https://github.com/demirtasdurmus/nexpresst/issues/22)) ([eb3f67b](https://github.com/demirtasdurmus/nexpresst/commit/eb3f67b0c4e0d246102132ead9b3735b3f90f938))
+
 ## [1.3.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.0...v1.3.1) (2024-08-23)
 
 
