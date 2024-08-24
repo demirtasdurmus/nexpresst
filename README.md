@@ -10,6 +10,7 @@
 - **Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
 - **Strong TypeScript Support:** Utilize TypeScript generics for type-safe request handlers and middleware, ensuring robust and predictable API interactions.
 - **Easy Integration:** Seamlessly integrate with Next.js's App Router and next/server module for a smooth development experience.
+- **Express Middleware Adaptor:** Now you can leverage existing Express-compatible middleware like `helmet`, `compression`, and `cors` in your Next.js API routes with the new `expressMiddlewareAdaptor` feature.
 
 ## Installation
 
@@ -88,23 +89,35 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 
 You can handle all other HTTP methods with the above syntax.
 
-### Creating Middleware
+### Using Express-Compatible Middleware
 
-Use the `IMiddlewareHandler` interface to create custom middleware. Here, we'll create a basic `CORS` middleware for global use.
+A powerful feature in `nexpresst` is the `expressMiddlewareAdaptor`, which allows you to use popular Express-compatible middleware in your Next.js routes. This opens up a world of existing middleware solutions from the Express ecosystem.
 
 ```ts
-// @/lib/middlewares/cors.ts
+import { NextRequest } from 'next/server';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import { ApiRouter, TNextContext, expressMiddlewareAdaptor } from 'nexpresst';
+
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new ApiRouter(req, ctx)
+    .use(expressMiddlewareAdaptor(compression())) // Using compression middleware
+    .use(expressMiddlewareAdaptor(cors({ origin: 'http://localhost:3000' }))) // Adding CORS middleware
+    .use(expressMiddlewareAdaptor(helmet())); // Adding helmet for security headers
+```
+
+### Creating Your Own Middleware
+
+Use the `IMiddlewareHandler` interface to create custom middleware. Here, we'll create a basic `logger` middleware.
+
+```ts
+// @/lib/middlewares/logger.ts
 
 import { IMiddlewareHandler } from 'nexpresst';
 
-export const cors: IMiddlewareHandler = async (req, res, next) => {
-  res.headers.set('Access-Control-Allow-Origin', '*');
-  res.headers.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.statusCode(204).send(null);
-  }
+export const logger: IMiddlewareHandler = async (req, res, next) => {
+  console.log(`${req.method} -- ${req.url}`);
 
   return next();
 };
@@ -120,12 +133,12 @@ You can create custom global middleware and register it with your global router 
 // @/app/lib/api-router.ts
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors).use(otherMiddleware);
+  new ApiRouter(req, ctx).use(logger).use(otherMiddleware);
 
 // Alternatively, you can use the following syntax for registering middleware
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors, otherMiddleware);
+  new ApiRouter(req, ctx).use(logger, otherMiddleware);
 ```
 
 These two middleware will be applied to all incoming requests.
@@ -140,11 +153,11 @@ const getPostsHandler: IRouteHandler = async (req, res) => {
 };
 
 export function GET(req: NextRequest, ctx: TNextContext) {
-  return apiRouter(req, ctx).use(cors).use(otherMiddleware).handle(getPostsHandler);
+  return apiRouter(req, ctx).use(logger).use(otherMiddleware).handle(getPostsHandler);
 
   // Alternatively, you can use the following syntax for registering middleware
 
-  return apiRouter(req, ctx).use(cors, otherMiddleware).handle(getPostsHandler);
+  return apiRouter(req, ctx).use(logger, otherMiddleware).handle(getPostsHandler);
 }
 ```
 
@@ -156,10 +169,10 @@ These two middleware will only be applied to this specific route.
 // @/app/lib/api-router.ts
 
 export const protectedRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors).use(protect);
+  new ApiRouter(req, ctx).use(logger).use(protect);
 
 export const publicRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors);
+  new ApiRouter(req, ctx).use(logger);
 ```
 
 Then, use the corresponding router instance in your relevant routes as follows:
