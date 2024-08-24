@@ -39,7 +39,6 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
-   * TODO: Add tests for this method
    * Sets a header on the response object
    * @param name - The name of the header
    * @param value - The value of the header
@@ -54,7 +53,6 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
-   * TODO: Add tests for this method
    * Retrieves a header from the response object
    * @param name - The name of the header
    * @returns The value of the header
@@ -66,7 +64,6 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
-   * TODO: Add tests for this method
    * Removes a header from the response object
    * @param name - The name of the header to remove
    * @returns void

@@ -123,4 +123,38 @@ describe('CustomResponse', () => {
     expect(notModifiedResponse.status).toBe(304);
     expect(notModifiedResponse.body).toBe(null);
   });
+
+  it('should set a custom header using setHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+
+    expect(response.headers.get('X-Custom-Header')).toEqual('custom-value');
+  });
+
+  it('should get a custom header using getHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+
+    expect(response.getHeader('X-Custom-Header')).toEqual('custom-value');
+  });
+
+  it('should return null for a non-existent header using getHeader()', () => {
+    const response = new CustomResponse();
+
+    expect(response.getHeader('X-Custom-Header')).toBeNull();
+  });
+
+  it('should remove a custom header using removeHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+    response.removeHeader('X-Custom-Header');
+
+    expect(response.getHeader('X-Custom-Header')).toBeNull();
+  });
+
+  it('should not throw an error when removing a non-existent header using removeHeader()', () => {
+    const response = new CustomResponse();
+
+    expect(() => response.removeHeader('X-Custom-Header')).not.toThrow();
+  });
 });

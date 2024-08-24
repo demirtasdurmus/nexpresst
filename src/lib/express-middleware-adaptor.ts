@@ -4,7 +4,6 @@ import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
 
 /**
- * TODO: Add tests for this function
  * This function is used to wrap an Express middleware function so that it can be used as a middleware handler in the API router.
  * @param expressMiddleware The Express middleware function to be wrapped.
  * @returns A middleware handler that can be used in the API router.
