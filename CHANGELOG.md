@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.4.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2024-08-24)
+
+
+### Features
+
+* implement cookie method for custom response ([#25](https://github.com/demirtasdurmus/nexpresst/issues/25)) ([e5bb833](https://github.com/demirtasdurmus/nexpresst/commit/e5bb833d7a7ca57dc58b6a842686ac231a2bb827))
+
 # [1.4.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.1...v1.4.0-rc.1) (2024-08-24)
 
 
