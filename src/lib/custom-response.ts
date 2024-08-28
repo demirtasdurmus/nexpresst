@@ -178,7 +178,14 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
     this.setHeader('Location', url);
 
     // Use Next.js's NextResponse.redirect method for handling redirects
-    return NextResponse.redirect(url, statusCode);
+    const response = NextResponse.redirect(url, statusCode);
+
+    // Set headers on the response
+    this.headers.forEach((value, key) => {
+      response.headers.set(key, value);
+    });
+
+    return response;
   }
 
   /**
