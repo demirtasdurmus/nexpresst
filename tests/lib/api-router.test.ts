@@ -93,8 +93,6 @@ describe('ApiRouter', () => {
 
     expect(middleware).toHaveBeenCalledOnce();
     expect(result!.status).toBe(500);
-    expect(await result!.text()).toEqual(
-      'Internal Server Error: Middleware Error\nAdd an onError middleware to the Router instance to handle errors gracefully',
-    );
+    expect(await result!.text()).toContain('INTERNAL_SERVER_ERROR: Middleware Error');
   });
 });

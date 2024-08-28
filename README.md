@@ -7,10 +7,10 @@
 ## Features
 
 - **Express-like Routing:** Use familiar patterns from Express to create API routes in Next.js.
-- **Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
+- **Express Middleware Adapter:** Now you can leverage existing Express-compatible middleware like `helmet`, `compression`, and `cors` in your Next.js API routes with the new `expressMiddlewareAdapter` feature.
+- **Custom Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
 - **Strong TypeScript Support:** Utilize TypeScript generics for type-safe request handlers and middleware, ensuring robust and predictable API interactions.
 - **Easy Integration:** Seamlessly integrate with Next.js's App Router and next/server module for a smooth development experience.
-- **Express Middleware Adaptor:** Now you can leverage existing Express-compatible middleware like `helmet`, `compression`, and `cors` in your Next.js API routes with the new `expressMiddlewareAdaptor` feature.
 
 ## Installation
 
@@ -91,20 +91,20 @@ You can handle all other HTTP methods with the above syntax.
 
 ### Using Express-Compatible Middleware
 
-A powerful feature in `nexpresst` is the `expressMiddlewareAdaptor`, which allows you to use popular Express-compatible middleware in your Next.js routes. This opens up a world of existing middleware solutions from the Express ecosystem.
+A powerful feature in `nexpresst` is the `expressMiddlewareAdapter`, which allows you to use popular Express-compatible middleware in your Next.js routes. This opens up a world of existing middleware solutions from the Express ecosystem.
 
 ```ts
 import { NextRequest } from 'next/server';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import { ApiRouter, TNextContext, expressMiddlewareAdaptor } from 'nexpresst';
+import { ApiRouter, TNextContext, expressMiddlewareAdapter } from 'nexpresst';
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
   new ApiRouter(req, ctx)
-    .use(expressMiddlewareAdaptor(compression())) // Using compression middleware
-    .use(expressMiddlewareAdaptor(cors({ origin: 'http://localhost:3000' }))) // Adding CORS middleware
-    .use(expressMiddlewareAdaptor(helmet())); // Adding helmet for security headers
+    .use(expressMiddlewareAdapter(compression())) // Using compression middleware
+    .use(expressMiddlewareAdapter(cors({ origin: 'http://localhost:3000' }))) // Adding CORS middleware
+    .use(expressMiddlewareAdapter(helmet())); // Adding helmet for security headers
 ```
 
 ### Creating Your Own Middleware

@@ -1,6 +1,6 @@
-import { CustomRequest, CustomResponse, expressMiddlewareAdaptor } from '../../src';
+import { CustomRequest, CustomResponse, expressMiddlewareAdapter } from '../../src';
 
-describe('expressMiddlewareAdaptor', () => {
+describe('expressMiddlewareAdapter', () => {
   it('should call the Express middleware and proceed to next handler', async () => {
     // Arrange: Mock request, response, and next handler
     const mockRequest = {} as CustomRequest;
@@ -11,7 +11,7 @@ describe('expressMiddlewareAdaptor', () => {
       next();
     });
 
-    const wrappedMiddleware = expressMiddlewareAdaptor(expressMiddleware);
+    const wrappedMiddleware = expressMiddlewareAdapter(expressMiddleware);
 
     // Act: Run the middleware
     await wrappedMiddleware(mockRequest, mockResponse, mockNext);
@@ -32,7 +32,7 @@ describe('expressMiddlewareAdaptor', () => {
       next(error);
     });
 
-    const wrappedMiddleware = expressMiddlewareAdaptor(expressMiddleware);
+    const wrappedMiddleware = expressMiddlewareAdapter(expressMiddleware);
 
     // Act & Assert: Ensure error is thrown
     await expect(wrappedMiddleware(mockRequest, mockResponse, mockNext)).rejects.toThrow(
@@ -50,7 +50,7 @@ describe('expressMiddlewareAdaptor', () => {
       next();
     });
 
-    const wrappedMiddleware = expressMiddlewareAdaptor(expressMiddleware);
+    const wrappedMiddleware = expressMiddlewareAdapter(expressMiddleware);
 
     // Act: Run the middleware
     await wrappedMiddleware(mockRequest, mockResponse, mockNext);

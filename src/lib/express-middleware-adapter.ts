@@ -8,7 +8,7 @@ import { CustomResponse } from './custom-response';
  * @param expressMiddleware The Express middleware function to be wrapped.
  * @returns A middleware handler that can be used in the API router.
  */
-export function expressMiddlewareAdaptor(
+export function expressMiddlewareAdapter(
   expressMiddleware: (req: any, res: any, next: (err?: any) => void) => void,
 ): IMiddlewareHandler {
   return async (req: CustomRequest, res: CustomResponse, next: NextHandler): Promise<void> => {
