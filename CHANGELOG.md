@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.5.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0...v1.5.0-rc.1) (2024-08-28)
+
+
+### Features
+
+* implement clear cookie and redirect methods in response class ([#33](https://github.com/demirtasdurmus/nexpresst/issues/33)) ([da61346](https://github.com/demirtasdurmus/nexpresst/commit/da61346a07e463b7c2bc2d02587e26aaadf8e23c))
+
 # [1.4.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.1...v1.4.0) (2024-08-28)
 
 
