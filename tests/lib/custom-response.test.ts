@@ -287,4 +287,14 @@ describe('CustomResponse', () => {
     expect(res.headers.get('Location')).toEqual('http://example.com/');
     expect(res.status).toEqual(302);
   });
+
+  it('should redirect to the given URL and append the headers set before redirect', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+
+    const res = response.redirect('http://example.com/');
+
+    expect(res.headers.get('Location')).toEqual('http://example.com/');
+    expect(res.headers.get('X-Custom-Header')).toEqual('custom-value');
+  });
 });
