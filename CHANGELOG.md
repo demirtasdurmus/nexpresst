@@ -1,5 +1,19 @@
 # Nexpresst Changelog
 
+# [1.4.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.1...v1.4.0) (2024-08-28)
+
+
+### Bug Fixes
+
+* fix cookie method encode function in options ([#26](https://github.com/demirtasdurmus/nexpresst/issues/26)) ([ef95bb0](https://github.com/demirtasdurmus/nexpresst/commit/ef95bb0daafa343cf5013fb392fcf07c3dee5855))
+* fix default error handling logic in api router class ([#31](https://github.com/demirtasdurmus/nexpresst/issues/31)) ([6a0bd4d](https://github.com/demirtasdurmus/nexpresst/commit/6a0bd4d65816c1c66662506223edd56156c8e96d))
+
+
+### Features
+
+* add express middleware adaptor to be able to use middleware in Express.js ecosystem ([#22](https://github.com/demirtasdurmus/nexpresst/issues/22)) ([eb3f67b](https://github.com/demirtasdurmus/nexpresst/commit/eb3f67b0c4e0d246102132ead9b3735b3f90f938))
+* implement cookie method for custom response ([#25](https://github.com/demirtasdurmus/nexpresst/issues/25)) ([e5bb833](https://github.com/demirtasdurmus/nexpresst/commit/e5bb833d7a7ca57dc58b6a842686ac231a2bb827))
+
 # [1.4.0-rc.4](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.3...v1.4.0-rc.4) (2024-08-28)
 
 
