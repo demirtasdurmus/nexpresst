@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.5.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0-rc.1...v1.5.0-rc.2) (2024-08-28)
+
+
+### Bug Fixes
+
+* append response headers to the res object on redirect ([308e95c](https://github.com/demirtasdurmus/nexpresst/commit/308e95c53d0c6615e4cc565e548c816a2701e23f))
+
 # [1.5.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0...v1.5.0-rc.1) (2024-08-28)
 
 
