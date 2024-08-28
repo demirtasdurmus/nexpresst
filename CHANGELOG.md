@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.4.0-rc.4](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.3...v1.4.0-rc.4) (2024-08-28)
+
+
+### Bug Fixes
+
+* fix default error handling logic in api router class ([#31](https://github.com/demirtasdurmus/nexpresst/issues/31)) ([6a0bd4d](https://github.com/demirtasdurmus/nexpresst/commit/6a0bd4d65816c1c66662506223edd56156c8e96d))
+
 # [1.4.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2024-08-24)
 
 
