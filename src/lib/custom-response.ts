@@ -145,6 +145,43 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
+   * The following method is used to redirect the response to a different URL.
+   * It defaults to a 302 status code unless otherwise specified.
+   * @param url The URL to redirect to.
+   * @param statusCode The status code to use for the redirect.
+   * @returns NextResponse
+   *
+   * @example
+   * response.redirect('https://example.com/new-url');
+   * response.redirect(301, 'https://example.com/new-url');
+   */
+  redirect(url: string): NextResponse<unknown>;
+  redirect(statusCode: number, url: string): NextResponse<unknown>;
+
+  redirect(statusCodeOrUrl: number | string, maybeUrl?: string) {
+    let url: string;
+    let statusCode = 302; // Default to 302
+
+    if (typeof statusCodeOrUrl === 'string') {
+      url = statusCodeOrUrl;
+    } else {
+      statusCode = statusCodeOrUrl;
+      url = maybeUrl!;
+    }
+
+    // Validate that the status code is a valid 3xx code for redirects
+    if (statusCode < 300 || statusCode >= 400) {
+      statusCode = 302; // Default to 302 if invalid
+    }
+
+    // Set the "Location" header for redirection
+    this.setHeader('Location', url);
+
+    // Use Next.js's NextResponse.redirect method for handling redirects
+    return NextResponse.redirect(url, statusCode);
+  }
+
+  /**
    * The following method is used to send the response.
    * It defaults to a 200 status code unless otherwise specified.
    * @param body The body of the response.

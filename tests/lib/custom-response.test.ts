@@ -260,4 +260,31 @@ describe('CustomResponse', () => {
     expect(setCookieHeader).toContain('Expires=Thu, 01 Jan 1970');
     expect(setCookieHeader).toContain('Path=/test');
   });
+
+  it('should redirect to the given URL with default status 302', () => {
+    const response = new CustomResponse();
+
+    const res = response.redirect('http://example.com/');
+
+    expect(res.headers.get('Location')).toEqual('http://example.com/');
+    expect(res.status).toEqual(302);
+  });
+
+  it('should redirect to the given URL with a custom status', () => {
+    const response = new CustomResponse();
+
+    const res = response.redirect(301, 'http://example.com/');
+
+    expect(res.headers.get('Location')).toEqual('http://example.com/');
+    expect(res.status).toEqual(301);
+  });
+
+  it('should redirect to the given URL with default status if status is not a valid redirect status', () => {
+    const response = new CustomResponse();
+
+    const res = response.redirect(404, 'http://example.com/');
+
+    expect(res.headers.get('Location')).toEqual('http://example.com/');
+    expect(res.status).toEqual(302);
+  });
 });
