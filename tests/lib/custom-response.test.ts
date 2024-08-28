@@ -123,4 +123,130 @@ describe('CustomResponse', () => {
     expect(notModifiedResponse.status).toBe(304);
     expect(notModifiedResponse.body).toBe(null);
   });
+
+  it('should set a custom header using setHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+
+    expect(response.headers.get('X-Custom-Header')).toEqual('custom-value');
+  });
+
+  it('should get a custom header using getHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+
+    expect(response.getHeader('X-Custom-Header')).toEqual('custom-value');
+  });
+
+  it('should return null for a non-existent header using getHeader()', () => {
+    const response = new CustomResponse();
+
+    expect(response.getHeader('X-Custom-Header')).toBeNull();
+  });
+
+  it('should remove a custom header using removeHeader()', () => {
+    const response = new CustomResponse();
+    response.setHeader('X-Custom-Header', 'custom-value');
+    response.removeHeader('X-Custom-Header');
+
+    expect(response.getHeader('X-Custom-Header')).toBeNull();
+  });
+
+  it('should not throw an error when removing a non-existent header using removeHeader()', () => {
+    const response = new CustomResponse();
+
+    expect(() => response.removeHeader('X-Custom-Header')).not.toThrow();
+  });
+
+  it('should set a basic cookie without options', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123');
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123');
+  });
+
+  it('should set a cookie with maxAge option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { maxAge: 3600 });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Max-Age=3600');
+  });
+
+  it('should set a cookie with signed option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { signed: true });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Signed');
+  });
+
+  it('should set a cookie with expires option', () => {
+    const response = new CustomResponse();
+    const expires = new Date('2025-01-01');
+    response.cookie('token', 'abc123', { expires });
+
+    expect(response.getHeader('Set-Cookie')).toEqual(
+      `token=abc123; Expires=${expires.toUTCString()}`,
+    );
+  });
+
+  it('should set a cookie with httpOnly option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { httpOnly: true });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; HttpOnly');
+  });
+
+  it('should set a cookie with path option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { path: '/api' });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/api');
+  });
+
+  it('should set a cookie with domain option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { domain: 'example.com' });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Domain=example.com');
+  });
+
+  it('should set a cookie with secure option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { secure: true });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Secure');
+  });
+
+  it('should set a cookie with sameSite option', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123', { sameSite: 'strict' });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; SameSite=strict');
+  });
+
+  it('should encode the cookie value if encode function is provided', () => {
+    const response = new CustomResponse();
+    const encodeFn = (value: string) => Buffer.from(value).toString('base64');
+    response.cookie('token', 'abc123', { encode: encodeFn });
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=YWJjMTIz'); // base64 for "token=abc123"
+  });
+
+  it('should handle a combination of all cookie options', () => {
+    const response = new CustomResponse();
+    const expires = new Date('2025-01-01');
+    response.cookie('token', 'abc123', {
+      maxAge: 3600,
+      expires,
+      httpOnly: true,
+      path: '/api',
+      domain: 'example.com',
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    expect(response.getHeader('Set-Cookie')).toEqual(
+      `token=abc123; Max-Age=3600; Expires=${expires.toUTCString()}; HttpOnly; Path=/api; Domain=example.com; Secure; SameSite=strict`,
+    );
+  });
 });

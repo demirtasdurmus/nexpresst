@@ -1,13 +1,14 @@
 # Nexpresst 🚀
 
-[![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![npm](https://img.shields.io/npm/dm/nexpresst)](https://www.npmjs.com/package/nexpresst) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml)
+[![npm latest version](https://img.shields.io/npm/v/nexpresst/latest.svg)](https://www.npmjs.com/package/nexpresst) [![npm](https://img.shields.io/npm/dm/nexpresst)](https://www.npmjs.com/package/nexpresst) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) [![ci](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml/badge.svg)](https://github.com/demirtasdurmus/nexpresst/actions/workflows/pipeline.yaml)
 
 **Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
 ## Features
 
 - **Express-like Routing:** Use familiar patterns from Express to create API routes in Next.js.
-- **Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
+- **Express Middleware Adapter:** You can leverage existing Express-compatible middleware like `helmet`, `compression`, `csurf` and `cors` in your Next.js API routes with the `expressMiddlewareAdapter`.
+- **Custom Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
 - **Strong TypeScript Support:** Utilize TypeScript generics for type-safe request handlers and middleware, ensuring robust and predictable API interactions.
 - **Easy Integration:** Seamlessly integrate with Next.js's App Router and next/server module for a smooth development experience.
 
@@ -88,23 +89,35 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 
 You can handle all other HTTP methods with the above syntax.
 
-### Creating Middleware
+### Using Express-Compatible Middleware
 
-Use the `IMiddlewareHandler` interface to create custom middleware. Here, we'll create a basic `CORS` middleware for global use.
+A powerful feature in `nexpresst` is the `expressMiddlewareAdapter`, which allows you to use popular Express-compatible middleware in your Next.js routes. This opens up a world of existing middleware solutions from the Express ecosystem.
 
 ```ts
-// @/lib/middlewares/cors.ts
+import { NextRequest } from 'next/server';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import { ApiRouter, TNextContext, expressMiddlewareAdapter } from 'nexpresst';
+
+export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
+  new ApiRouter(req, ctx)
+    .use(expressMiddlewareAdapter(compression())) // Using compression middleware
+    .use(expressMiddlewareAdapter(cors({ origin: 'http://localhost:3000' }))) // Adding CORS middleware
+    .use(expressMiddlewareAdapter(helmet())); // Adding helmet for security headers
+```
+
+### Creating Your Own Middleware
+
+Use the `IMiddlewareHandler` interface to create custom middleware. Here, we'll create a basic `logger` middleware.
+
+```ts
+// @/lib/middlewares/logger.ts
 
 import { IMiddlewareHandler } from 'nexpresst';
 
-export const cors: IMiddlewareHandler = async (req, res, next) => {
-  res.headers.set('Access-Control-Allow-Origin', '*');
-  res.headers.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.statusCode(204).send(null);
-  }
+export const logger: IMiddlewareHandler = async (req, res, next) => {
+  console.log(`${req.method} -- ${req.url}`);
 
   return next();
 };
@@ -120,12 +133,12 @@ You can create custom global middleware and register it with your global router 
 // @/app/lib/api-router.ts
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors).use(otherMiddleware);
+  new ApiRouter(req, ctx).use(logger).use(otherMiddleware);
 
 // Alternatively, you can use the following syntax for registering middleware
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors, otherMiddleware);
+  new ApiRouter(req, ctx).use(logger, otherMiddleware);
 ```
 
 These two middleware will be applied to all incoming requests.
@@ -140,11 +153,11 @@ const getPostsHandler: IRouteHandler = async (req, res) => {
 };
 
 export function GET(req: NextRequest, ctx: TNextContext) {
-  return apiRouter(req, ctx).use(cors).use(otherMiddleware).handle(getPostsHandler);
+  return apiRouter(req, ctx).use(logger).use(otherMiddleware).handle(getPostsHandler);
 
   // Alternatively, you can use the following syntax for registering middleware
 
-  return apiRouter(req, ctx).use(cors, otherMiddleware).handle(getPostsHandler);
+  return apiRouter(req, ctx).use(logger, otherMiddleware).handle(getPostsHandler);
 }
 ```
 
@@ -156,10 +169,10 @@ These two middleware will only be applied to this specific route.
 // @/app/lib/api-router.ts
 
 export const protectedRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors).use(protect);
+  new ApiRouter(req, ctx).use(logger).use(protect);
 
 export const publicRouter = (req: NextRequest, ctx: TNextContext) =>
-  new ApiRouter(req, ctx).use(cors);
+  new ApiRouter(req, ctx).use(logger);
 ```
 
 Then, use the corresponding router instance in your relevant routes as follows:

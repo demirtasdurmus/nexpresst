@@ -5,3 +5,4 @@ export * from './process-request';
 export * from './export-all-methods';
 export * from './api-router';
 export * from './export-all-http-methods';
+export * from './express-middleware-adapter';
