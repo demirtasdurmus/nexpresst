@@ -7,7 +7,7 @@
 ## Features
 
 - **Express-like Routing:** Use familiar patterns from Express to create API routes in Next.js.
-- **Express Middleware Adapter:** Now you can leverage existing Express-compatible middleware like `helmet`, `compression`, and `cors` in your Next.js API routes with the new `expressMiddlewareAdapter` feature.
+- **Express Middleware Adapter:** You can leverage existing Express-compatible middleware like `helmet`, `compression`, `csurf` and `cors` in your Next.js API routes with the `expressMiddlewareAdapter`.
 - **Custom Middleware Support:** Define global and route-specific middleware for fine-grained request handling.
 - **Strong TypeScript Support:** Utilize TypeScript generics for type-safe request handlers and middleware, ensuring robust and predictable API interactions.
 - **Easy Integration:** Seamlessly integrate with Next.js's App Router and next/server module for a smooth development experience.
