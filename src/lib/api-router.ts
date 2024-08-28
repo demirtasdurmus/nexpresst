@@ -96,14 +96,10 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
         );
       } else {
         if (process.env.NODE_ENV !== 'test') console.error(err);
-        return new Response(
-          `Internal Server Error: ${
-            (err as any)?.message
-          }\nAdd an onError middleware to the Router instance to handle errors gracefully`,
-          {
-            status: 500,
-          },
-        );
+
+        return this.customResponse
+          .statusCode(500)
+          .send(`INTERNAL_SERVER_ERROR: ${(err as any)?.message}`);
       }
     }
   }
