@@ -249,4 +249,15 @@ describe('CustomResponse', () => {
       `token=abc123; Max-Age=3600; Expires=${expires.toUTCString()}; HttpOnly; Path=/api; Domain=example.com; Secure; SameSite=strict`,
     );
   });
+
+  it('should clear a cookie by setting it with an expiration date in the past', () => {
+    const response = new CustomResponse();
+
+    response.clearCookie('test_cookie', { path: '/test' });
+
+    const setCookieHeader = response.getHeader('Set-Cookie');
+    expect(setCookieHeader).toContain('test_cookie=;');
+    expect(setCookieHeader).toContain('Expires=Thu, 01 Jan 1970');
+    expect(setCookieHeader).toContain('Path=/test');
+  });
 });

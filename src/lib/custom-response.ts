@@ -127,6 +127,24 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   }
 
   /**
+   * The following method is used to clear a cookie in the response header.
+   * @param name The name of the cookie to clear.
+   * @param options The options for the cookie.
+   * @returns The current instance of the CustomResponse object.
+   */
+  clearCookie(name: string, options?: CookieOptions): this {
+    const opts = {
+      ...options,
+      expires: new Date(1), // Set the cookie expiration to a past date
+      path: options?.path || '/', // Default path to '/'
+      maxAge: undefined, // Ensure maxAge is cleared
+    };
+
+    // Call the existing cookie method with an empty value to clear it
+    return this.cookie(name, '', opts);
+  }
+
+  /**
    * The following method is used to send the response.
    * It defaults to a 200 status code unless otherwise specified.
    * @param body The body of the response.
