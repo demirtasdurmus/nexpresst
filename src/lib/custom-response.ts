@@ -149,14 +149,14 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
    * It defaults to a 302 status code unless otherwise specified.
    * @param url The URL to redirect to.
    * @param statusCode The status code to use for the redirect.
-   * @returns NextResponse
+   * @returns CustomResponse
    *
    * @example
    * response.redirect('https://example.com/new-url');
    * response.redirect(301, 'https://example.com/new-url');
    */
-  redirect(url: string): NextResponse<unknown>;
-  redirect(statusCode: number, url: string): NextResponse<unknown>;
+  redirect(url: string): CustomResponse<unknown>;
+  redirect(statusCode: number, url: string): CustomResponse<unknown>;
 
   redirect(statusCodeOrUrl: number | string, maybeUrl?: string) {
     let url: string;
@@ -185,7 +185,7 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
    * The following method is used to send the response.
    * It defaults to a 200 status code unless otherwise specified.
    * @param body The body of the response.
-   * @returns A NextResponse object.
+   * @returns A CustomResponse object.
    */
   send(body?: TResponseData) {
     let response: NextResponse;
@@ -209,12 +209,12 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
     });
 
     // TODO: Search for a better way to handle this
-    return response as NextResponse<TResponseData>;
+    return response as CustomResponse<TResponseData>;
   }
 
   /**
    * The following method sends a response with no body.
-   * @returns A NextResponse object.
+   * @returns A CustomResponse object.
    */
   end() {
     // Finalize the response without a body
