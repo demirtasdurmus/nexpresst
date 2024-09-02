@@ -1,5 +1,26 @@
 # Nexpresst Changelog
 
+# [1.5.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0-rc.2...v1.5.0-rc.3) (2024-09-02)
+
+
+### Bug Fixes
+
+* fix cookie default path option to / ([#35](https://github.com/demirtasdurmus/nexpresst/issues/35)) ([10d8749](https://github.com/demirtasdurmus/nexpresst/commit/10d874919d714cbdda25bda392dcff8614f11894))
+
+# [1.5.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0-rc.1...v1.5.0-rc.2) (2024-08-28)
+
+
+### Bug Fixes
+
+* append response headers to the res object on redirect ([308e95c](https://github.com/demirtasdurmus/nexpresst/commit/308e95c53d0c6615e4cc565e548c816a2701e23f))
+
+# [1.5.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0...v1.5.0-rc.1) (2024-08-28)
+
+
+### Features
+
+* implement clear cookie and redirect methods in response class ([#33](https://github.com/demirtasdurmus/nexpresst/issues/33)) ([da61346](https://github.com/demirtasdurmus/nexpresst/commit/da61346a07e463b7c2bc2d02587e26aaadf8e23c))
+
 # [1.4.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.3.1...v1.4.0) (2024-08-28)
 
 
