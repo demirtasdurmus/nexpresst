@@ -2,6 +2,14 @@
 import { NextResponse } from 'next/server';
 import { BodyInit, CookieOptions, ResponseInit } from '../interfaces';
 
+/**
+ * TODO: Move this to a shared utility file and add tests
+ * The following function is used to capitalize the first letter of a string.
+ */
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export class CustomResponse<TResponseData = unknown> extends NextResponse {
   private noBodyStatusCodes = [204, 205, 304];
   /**
@@ -110,6 +118,8 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
       }
       if (options.path) {
         cookieString += `; Path=${options.path}`;
+      } else {
+        cookieString += `; Path=/`;
       }
       if (options.domain) {
         cookieString += `; Domain=${options.domain}`;
@@ -118,8 +128,14 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
         cookieString += `; Secure`;
       }
       if (options.sameSite) {
-        cookieString += `; SameSite=${options.sameSite}`;
+        if (typeof options.sameSite === 'boolean') {
+          cookieString += `; SameSite=Strict`;
+        } else {
+          cookieString += `; SameSite=${capitalizeFirstLetter(options.sameSite)}`;
+        }
       }
+    } else {
+      cookieString += '; Path=/';
     }
 
     this.setHeader('Set-Cookie', cookieString);

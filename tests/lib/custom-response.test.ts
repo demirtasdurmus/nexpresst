@@ -162,21 +162,21 @@ describe('CustomResponse', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123');
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/');
   });
 
   it('should set a cookie with maxAge option', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { maxAge: 3600 });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Max-Age=3600');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Max-Age=3600; Path=/');
   });
 
   it('should set a cookie with signed option', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { signed: true });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Signed');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Signed; Path=/');
   });
 
   it('should set a cookie with expires option', () => {
@@ -185,7 +185,7 @@ describe('CustomResponse', () => {
     response.cookie('token', 'abc123', { expires });
 
     expect(response.getHeader('Set-Cookie')).toEqual(
-      `token=abc123; Expires=${expires.toUTCString()}`,
+      `token=abc123; Expires=${expires.toUTCString()}; Path=/`,
     );
   });
 
@@ -193,7 +193,7 @@ describe('CustomResponse', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { httpOnly: true });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; HttpOnly');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; HttpOnly; Path=/');
   });
 
   it('should set a cookie with path option', () => {
@@ -207,21 +207,28 @@ describe('CustomResponse', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { domain: 'example.com' });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Domain=example.com');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/; Domain=example.com');
   });
 
   it('should set a cookie with secure option', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { secure: true });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Secure');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/; Secure');
   });
 
   it('should set a cookie with sameSite option', () => {
     const response = new CustomResponse();
     response.cookie('token', 'abc123', { sameSite: 'strict' });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; SameSite=strict');
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/; SameSite=Strict');
+  });
+
+  it('should set the path option to / if not provided', () => {
+    const response = new CustomResponse();
+    response.cookie('token', 'abc123');
+
+    expect(response.getHeader('Set-Cookie')).toEqual('token=abc123; Path=/');
   });
 
   it('should encode the cookie value if encode function is provided', () => {
@@ -229,7 +236,7 @@ describe('CustomResponse', () => {
     const encodeFn = (value: string) => Buffer.from(value).toString('base64');
     response.cookie('token', 'abc123', { encode: encodeFn });
 
-    expect(response.getHeader('Set-Cookie')).toEqual('token=YWJjMTIz'); // base64 for "token=abc123"
+    expect(response.getHeader('Set-Cookie')).toEqual('token=YWJjMTIz; Path=/'); // base64 for "token=abc123"
   });
 
   it('should handle a combination of all cookie options', () => {
@@ -246,7 +253,7 @@ describe('CustomResponse', () => {
     });
 
     expect(response.getHeader('Set-Cookie')).toEqual(
-      `token=abc123; Max-Age=3600; Expires=${expires.toUTCString()}; HttpOnly; Path=/api; Domain=example.com; Secure; SameSite=strict`,
+      `token=abc123; Max-Age=3600; Expires=${expires.toUTCString()}; HttpOnly; Path=/api; Domain=example.com; Secure; SameSite=Strict`,
     );
   });
 
