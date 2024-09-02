@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.5.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0-rc.2...v1.5.0-rc.3) (2024-09-02)
+
+
+### Bug Fixes
+
+* fix cookie default path option to / ([#35](https://github.com/demirtasdurmus/nexpresst/issues/35)) ([10d8749](https://github.com/demirtasdurmus/nexpresst/commit/10d874919d714cbdda25bda392dcff8614f11894))
+
 # [1.5.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0-rc.1...v1.5.0-rc.2) (2024-08-28)
 
 
