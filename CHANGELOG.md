@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+## [1.5.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0...v1.5.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* fix incorrect file references in readme ([4bb1acb](https://github.com/demirtasdurmus/nexpresst/commit/4bb1acbdb17095b9a9646714189ee9e137ad2316))
+
 # [1.5.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.4.0...v1.5.0) (2024-09-02)
 
 
