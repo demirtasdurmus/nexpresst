@@ -31,7 +31,7 @@ Version 2 introduces significant changes to the routing API, including the shift
 Start by creating a function dynamically generating an apiRouter instance in your Next.js application. This function will serve as the central point for managing routes and applying global middleware.
 
 ```ts
-// @/app/lib/api-router.ts
+// @/lib/api-router.ts
 
 import { NextRequest } from 'next/server';
 import { ApiRouter, TNextContext } from 'nexpresst';
@@ -130,7 +130,7 @@ You can create custom global middleware and register it with your global router 
 **Example:** Global Usage
 
 ```ts
-// @/app/lib/api-router.ts
+// @/lib/api-router.ts
 
 export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
   new ApiRouter(req, ctx).use(logger).use(otherMiddleware);
@@ -166,7 +166,7 @@ These two middleware will only be applied to this specific route.
 ℹ️ Note that you can always create multiple instances of the ApiRouter class with different configurations, allowing you to register each instance with different middleware for more fine-tuned control.
 
 ```ts
-// @/app/lib/api-router.ts
+// @/lib/api-router.ts
 
 export const protectedRouter = (req: NextRequest, ctx: TNextContext) =>
   new ApiRouter(req, ctx).use(logger).use(protect);
@@ -180,7 +180,7 @@ Then, use the corresponding router instance in your relevant routes as follows:
 ```ts
 // @/app/api/users/posts/route.ts
 
-import { protectedRouter } from '@/app/lib/api-router';
+import { protectedRouter } from '@/lib/api-router';
 
 // Users are only allowed to see their own posts
 export function GET(req: NextRequest, ctx: TNextContext) {
@@ -191,7 +191,7 @@ export function GET(req: NextRequest, ctx: TNextContext) {
 ```ts
 // @/app/api/posts/route.ts
 
-import { publicRouter } from '@/app/lib/api-router';
+import { publicRouter } from '@/lib/api-router';
 
 // Everyone can see the posts
 export function GET(req: NextRequest, ctx: TNextContext) {
@@ -236,7 +236,7 @@ const example: IRouteHandler<
 The `IMiddlewareHandler` interface allows you to define the types for path parameters, query parameters, request payload, response payloads and session objects to ensure type safety.
 
 ```ts
-// @/app/lib/middlewares/example.ts
+// @/lib/middlewares/example.ts
 
 import { IMiddlewareHandler } from 'nexpresst';
 
@@ -267,7 +267,7 @@ const example: IMiddlewareHandler<
 You can optionally register an `onError` middleware with global router to handle errors gracefully.
 
 ```ts
-// @/app/lib/middlewares/error-handler.ts
+// @/lib/middlewares/error-handler.ts
 
 import { IMiddlewareHandler } from 'nexpresst';
 
@@ -297,7 +297,7 @@ const errorHandler: IMiddlewareHandler<unknown, unknown, unknown, TErrorResponse
 And then in your `api-router.ts` file:
 
 ```ts
-// @/app/lib/api-router.ts
+// @/lib/api-router.ts
 
 import { errorHandler } from '@/lib/middlewares';
 
