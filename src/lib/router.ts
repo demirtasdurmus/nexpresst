@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { HttpMethod, IMiddlewareHandler, IRouteHandler } from '../interfaces';
 import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
-import { IMiddlewareHandler, IRouteHandler, HttpMethod } from '../interfaces';
 
 /**
  * @deprecated

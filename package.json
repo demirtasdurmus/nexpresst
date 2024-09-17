@@ -30,6 +30,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint --fix .",
+    "format": "prettier --write .",
     "commit": "commit",
     "prepare": "husky"
   },
@@ -51,6 +52,7 @@
     "husky": "^9.1.4",
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.0.0",
     "semantic-release": "^24.0.0",
     "tsc-files": "^1.1.4",
     "typescript": "^5.5.4",
