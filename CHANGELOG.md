@@ -1,5 +1,23 @@
 # Nexpresst Changelog
 
+# [1.6.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.1...v1.6.0-rc.1) (2025-12-11)
+
+
+### Features
+
+* add support for next 15 ([#43](https://github.com/demirtasdurmus/nexpresst/issues/43)) ([2c21e55](https://github.com/demirtasdurmus/nexpresst/commit/2c21e555c4c31fa5e474c2fd3d58378a31b96c39))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+
+* chore: ignore md files in npm
+
+* feat: update next context params type to promise
+
+* chore: update ci config and bump node versions
+
 ## [1.5.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.0...v1.5.1) (2024-09-06)
 
 
