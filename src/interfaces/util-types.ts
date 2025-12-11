@@ -68,7 +68,7 @@ export type ValueOrPromise<T> = T | Promise<T>;
 export type NextHandler = () => ValueOrPromise<any>;
 
 export type TNextContext = {
-  params?: Record<string, string>;
+  params?: Promise<Record<string, string>>;
 };
 
 export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext> = {

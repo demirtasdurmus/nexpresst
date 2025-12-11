@@ -18,7 +18,7 @@ describe('ApiRouter', () => {
   });
 
   const mockContext = {
-    params: { id: '1' },
+    params: Promise.resolve({ id: '1' }),
   };
 
   it('should initialize an instance with custom request and response correctly', () => {

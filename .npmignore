@@ -17,3 +17,8 @@ package-lock.json
 tsconfig.json
 tsconfig.build.json
 vitest.config.mts
+
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+LICENSE
+README.md

@@ -1,7 +1,7 @@
 name: Linting, Building, Testing
 
 env:
-  NODE_VERSION: 20.14.0
+  NODE_VERSION: 22.21.1
 
 on:
   pull_request:
