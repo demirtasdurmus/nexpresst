@@ -1,8 +1,8 @@
 import {
+  ApiRouter,
   exportAllHttpMethods,
   HttpMethod,
   IRouteHandler,
-  ApiRouter,
   TNextContext,
 } from '../../src';
 

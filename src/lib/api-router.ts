@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IMiddlewareHandler, IRouteHandler, TNextContext } from '../interfaces';
 import { CustomRequest } from './custom-request';
 import { CustomResponse } from './custom-response';
-import { IMiddlewareHandler, IRouteHandler, TNextContext } from '../interfaces';
 
 export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext = TNextContext> {
   private customRequest: CustomRequest;

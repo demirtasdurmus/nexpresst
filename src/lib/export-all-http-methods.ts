@@ -1,4 +1,4 @@
-import { HttpMethodHandlers, IRouteHandler, ApiRouterFactory, TNextContext } from '../interfaces';
+import { ApiRouterFactory, HttpMethodHandlers, IRouteHandler, TNextContext } from '../interfaces';
 
 export function exportAllHttpMethods<Req extends Request, Ctx extends TNextContext>(
   apiRouter: ApiRouterFactory<Req, Ctx>,
