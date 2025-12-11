@@ -12,7 +12,13 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
 
   private errorHandler?: IMiddlewareHandler<any, any, any, any, any>;
 
+  private paramsPromise: TNextContext['params'] | undefined;
+
   constructor(req: Req, ctx: Ctx) {
+    // Store the params promise for later resolution
+    this.paramsPromise = ctx.params;
+
+    // Create CustomRequest WITHOUT params initially
     this.customRequest = new CustomRequest(req.url, {
       ...req,
       method: req.method,
@@ -27,7 +33,7 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
       referrer: req.referrer,
       referrerPolicy: req.referrerPolicy,
       signal: req.signal,
-      params: ctx.params || {},
+      params: {},
       ...(req.body ? { duplex: 'half' } : {}), // Enable duplex mode if body is present
     });
   }
@@ -57,6 +63,11 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
    */
   async handle(handler: IRouteHandler<any, any, any, any, any>): Promise<void | Response> {
     try {
+      // Resolve params before executing middlewares/handlers
+      if (this.paramsPromise) {
+        this.customRequest.params = await this.paramsPromise;
+      }
+
       /**
        * Execute all middlewares in sequence
        * If a middleware returns a response, stop the execution
