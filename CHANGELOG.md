@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [1.6.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2025-12-12)
+
+
+### Bug Fixes
+
+* type error on catch all route because of restrictive params type ([#46](https://github.com/demirtasdurmus/nexpresst/issues/46)) ([4e92160](https://github.com/demirtasdurmus/nexpresst/commit/4e92160cf84eb849905f670090921789cab54792))
+
 # [1.6.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2025-12-12)
 
 
