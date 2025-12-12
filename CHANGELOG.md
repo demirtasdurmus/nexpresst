@@ -1,5 +1,17 @@
 # Nexpresst Changelog
 
+# [1.6.0-rc.2](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2025-12-12)
+
+
+### Features
+
+* bump next version and add it as peer deps ([#45](https://github.com/demirtasdurmus/nexpresst/issues/45)) ([46c138e](https://github.com/demirtasdurmus/nexpresst/commit/46c138e018ae277c00c85fc31e31e1a9c72b204b))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+
 # [1.6.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.1...v1.6.0-rc.1) (2025-12-11)
 
 
