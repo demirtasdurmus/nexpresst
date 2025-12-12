@@ -1,5 +1,17 @@
 # Nexpresst Changelog
 
+# [1.7.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0...v1.7.0) (2025-12-12)
+
+
+### Features
+
+* update next version ([#48](https://github.com/demirtasdurmus/nexpresst/issues/48)) ([74fcf7c](https://github.com/demirtasdurmus/nexpresst/commit/74fcf7ce9426955d843b079d555a5fc9aa306421))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+
 # [1.6.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.1...v1.6.0) (2025-12-12)
 
 
