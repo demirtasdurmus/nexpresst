@@ -8,9 +8,9 @@ import { IMiddlewareHandler } from '../interfaces';
  * @param next The next function to be called.
  * @example
  * ```ts
- * import { Router, jsonParser } from 'nexpresst';
+ * import { ApiRouter, jsonParser } from 'nexpresst';
  *
- * export const router = new Router().use(jsonParser);
+ * export const router = new ApiRouter().use(jsonParser);
  * ```
  */
 export const jsonParser: IMiddlewareHandler = async (req, _res, next) => {

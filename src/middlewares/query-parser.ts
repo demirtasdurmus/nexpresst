@@ -8,9 +8,9 @@ import { IMiddlewareHandler } from '../interfaces';
  * @param next The next function to be called.
  * @example
  * ```ts
- * import { Router, queryParser } from 'nexpresst';
+ * import { ApiRouter, queryParser } from 'nexpresst';
  *
- * export const router = new Router().use(queryParser);
+ * export const router = new ApiRouter().use(queryParser);
  * ```
  */
 export const queryParser: IMiddlewareHandler = async (req, _res, next) => {
