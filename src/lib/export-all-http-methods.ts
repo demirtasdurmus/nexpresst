@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiRouterFactory, HttpMethodHandlers, IRouteHandler, TNextContext } from '../interfaces';
 
 /**
@@ -7,7 +8,7 @@ import { ApiRouterFactory, HttpMethodHandlers, IRouteHandler, TNextContext } fro
  * @param handler The handler to export the HTTP methods from.
  * @returns An object with all the HTTP methods as keys and the API router as the value.
  */
-export function exportAllHttpMethods<Req extends Request, Ctx extends TNextContext>(
+export function exportAllHttpMethods<Req extends Request, Ctx extends TNextContext<any>>(
   apiRouter: ApiRouterFactory<Req, Ctx>,
   handler: IRouteHandler,
 ): HttpMethodHandlers<Req, Ctx> {
