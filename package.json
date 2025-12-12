@@ -1,6 +1,6 @@
 {
   "name": "nexpresst",
-  "version": "1.6.0-rc.3",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -50,7 +50,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "next": "^15",
+    "next": "^15.0.0",
     "prettier": "^3.7.4",
     "prettier-plugin-organize-imports": "^4.3.0",
     "semantic-release": "^25.0.2",
@@ -60,6 +60,6 @@
     "vitest": "^4.0.15"
   },
   "peerDependencies": {
-    "next": "^15"
+    "next": "^15.0.0"
   }
 }

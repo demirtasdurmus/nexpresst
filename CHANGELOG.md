@@ -1,5 +1,54 @@
 # Nexpresst Changelog
 
+# [2.0.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.7.0...v2.0.0) (2025-12-12)
+
+
+* feat!: support Next.js 15 async params ([38ee057](https://github.com/demirtasdurmus/nexpresst/commit/38ee057b3b27eef27c4e18a69d0e8d0aff9cf2b1))
+
+
+### BREAKING CHANGES
+
+* nexpresst now requires Next.js 15 as a peer dependency.
+The params context in route handlers is now a Promise that must be awaited.
+Users on Next.js 14 should use nexpresst@1.x.
+
+# [1.7.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0...v1.7.0) (2025-12-12)
+
+
+### Features
+
+* update next version ([#48](https://github.com/demirtasdurmus/nexpresst/issues/48)) ([74fcf7c](https://github.com/demirtasdurmus/nexpresst/commit/74fcf7ce9426955d843b079d555a5fc9aa306421))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+
+# [1.6.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.5.1...v1.6.0) (2025-12-12)
+
+
+### Bug Fixes
+
+* type error on catch all route because of restrictive params type ([#46](https://github.com/demirtasdurmus/nexpresst/issues/46)) ([4e92160](https://github.com/demirtasdurmus/nexpresst/commit/4e92160cf84eb849905f670090921789cab54792))
+
+
+### Features
+
+* add support for next 15 ([#43](https://github.com/demirtasdurmus/nexpresst/issues/43)) ([2c21e55](https://github.com/demirtasdurmus/nexpresst/commit/2c21e555c4c31fa5e474c2fd3d58378a31b96c39))
+* bump next version and add it as peer deps ([#45](https://github.com/demirtasdurmus/nexpresst/issues/45)) ([46c138e](https://github.com/demirtasdurmus/nexpresst/commit/46c138e018ae277c00c85fc31e31e1a9c72b204b))
+
+
+### BREAKING CHANGES
+
+* CHANGE
+* CHANGE
+
+* chore: ignore md files in npm
+
+* feat: update next context params type to promise
+
+* chore: update ci config and bump node versions
+
 # [1.6.0-rc.3](https://github.com/demirtasdurmus/nexpresst/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2025-12-12)
 
 
