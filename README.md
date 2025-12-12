@@ -195,7 +195,7 @@ import { publicRouter } from '@/lib/api-router';
 
 // Everyone can see the posts
 export function GET(req: NextRequest, ctx: TNextContext) {
-  return publicRouter(req, ctx).handle(someProtectedHandler);
+  return publicRouter(req, ctx).handle(somePublicHandler);
 }
 ```
 
