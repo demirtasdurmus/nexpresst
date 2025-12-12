@@ -17,3 +17,7 @@ package-lock.json
 tsconfig.json
 tsconfig.build.json
 vitest.config.mts
+.nvmrc
+
+CHANGELOG.md
+CODE_OF_CONDUCT.md

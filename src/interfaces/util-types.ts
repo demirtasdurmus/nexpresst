@@ -67,11 +67,11 @@ export type ValueOrPromise<T> = T | Promise<T>;
 
 export type NextHandler = () => ValueOrPromise<any>;
 
-export type TNextContext = {
-  params?: Record<string, string>;
+export type TNextContext<P = Record<string, string | string[] | undefined>> = {
+  params?: Promise<P>;
 };
 
-export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext> = {
+export type HttpMethodHandlers<Req extends Request, Ctx extends TNextContext<any>> = {
   [M in HttpMethod]: (req: Req, ctx: Ctx) => ValueOrPromise<any>;
 };
 
