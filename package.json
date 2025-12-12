@@ -50,6 +50,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "next": "^15",
     "prettier": "^3.7.4",
     "prettier-plugin-organize-imports": "^4.3.0",
     "semantic-release": "^25.0.2",
@@ -58,7 +59,7 @@
     "typescript-eslint": "^8.49.0",
     "vitest": "^4.0.15"
   },
-  "dependencies": {
-    "next": "^15.5.8"
+  "peerDependencies": {
+    "next": "^15"
   }
 }
