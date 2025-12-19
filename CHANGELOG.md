@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [2.1.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v2.0.0...v2.1.0-rc.1) (2025-12-19)
+
+
+### Features
+
+* implement response.locals ([#49](https://github.com/demirtasdurmus/nexpresst/issues/49)) ([aac5e8a](https://github.com/demirtasdurmus/nexpresst/commit/aac5e8a29a41fbf23a92bdd27adb42ca556bbe87))
+
 # [2.0.0](https://github.com/demirtasdurmus/nexpresst/compare/v1.7.0...v2.0.0) (2025-12-12)
 
 
