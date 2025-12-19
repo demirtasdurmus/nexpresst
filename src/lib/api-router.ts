@@ -8,9 +8,9 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
 
   private customResponse: CustomResponse = new CustomResponse();
 
-  private middlewares: IMiddlewareHandler<any, any, any, any, any>[] = [];
+  private middlewares: IMiddlewareHandler<any, any, any, any, any, any>[] = [];
 
-  private errorHandler?: IMiddlewareHandler<any, any, any, any, any>;
+  private errorHandler?: IMiddlewareHandler<any, any, any, any, any, any>;
 
   private paramsPromise: TNextContext['params'] | undefined;
 
@@ -42,7 +42,7 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
    * Add an error handler to the router instance
    * It will be executed when an error occurs during the execution of the middlewares or route handlers
    */
-  onError(handler: IMiddlewareHandler<any, any, any, any, any>) {
+  onError(handler: IMiddlewareHandler<any, any, any, any, any, any>) {
     this.errorHandler = handler;
     return this;
   }
@@ -51,7 +51,7 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
    * Add a middleware to the router instance
    * It will be used to register a middleware that will be executed before the route handler
    */
-  use(...middlewares: IMiddlewareHandler<any, any, any, any, any>[]) {
+  use(...middlewares: IMiddlewareHandler<any, any, any, any, any, any>[]) {
     this.middlewares.push(...middlewares);
     return this;
   }
@@ -61,7 +61,7 @@ export class ApiRouter<Req extends Request = Request, Ctx extends TNextContext =
    * The main function of the router instance, used to execute the middlewares and route handlers
    * And handle the errors that occur during the execution
    */
-  async handle(handler: IRouteHandler<any, any, any, any, any>): Promise<void | Response> {
+  async handle(handler: IRouteHandler<any, any, any, any, any, any>): Promise<void | Response> {
     try {
       // Resolve params before executing middlewares/handlers
       if (this.paramsPromise) {
