@@ -8,9 +8,9 @@ npm install nexpresst
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div></div>
-  <div>
-    <a href="getting-started.md">Next: Getting Started ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"></td>
+<td align="right"><a href="getting-started.md">Next: Getting Started ></a></td>
+</tr>
+</table>

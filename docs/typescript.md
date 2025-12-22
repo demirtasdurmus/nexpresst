@@ -75,11 +75,9 @@ const example: IMiddlewareHandler<
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div>
-    <a href="middleware.md">< Middleware</a>
-  </div>
-  <div>
-    <a href="error-handling.md">Next: Error Handling ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"><a href="middleware.md">< Middleware</a></td>
+<td align="right"><a href="error-handling.md">Next: Error Handling ></a></td>
+</tr>
+</table>

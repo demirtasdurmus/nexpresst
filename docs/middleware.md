@@ -114,11 +114,9 @@ This approach ensures that different routes are handled according to their speci
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div>
-    <a href="getting-started.md">< Getting Started</a>
-  </div>
-  <div>
-    <a href="typescript.md">Next: TypeScript Support ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"><a href="getting-started.md">< Getting Started</a></td>
+<td align="right"><a href="typescript.md">Next: TypeScript Support ></a></td>
+</tr>
+</table>

@@ -69,11 +69,9 @@ You can handle all other HTTP methods with the above syntax.
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div>
-    <a href="installation.md">< Installation</a>
-  </div>
-  <div>
-    <a href="middleware.md">Next: Middleware ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"><a href="installation.md">< Installation</a></td>
+<td align="right"><a href="middleware.md">Next: Middleware ></a></td>
+</tr>
+</table>

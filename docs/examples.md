@@ -4,11 +4,9 @@ For a full example, check out the [GitHub repository](https://github.com/demirta
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div>
-    <a href="catch-all-routes.md">< Catch-All Routes</a>
-  </div>
-  <div>
-    <a href="contributing.md">Next: Contributing ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"><a href="catch-all-routes.md">< Catch-All Routes</a></td>
+<td align="right"><a href="contributing.md">Next: Contributing ></a></td>
+</tr>
+</table>

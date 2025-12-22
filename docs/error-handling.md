@@ -45,11 +45,9 @@ export const apiRouter = (req: NextRequest, ctx: TNextContext) =>
 
 ---
 
-<div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-  <div>
-    <a href="typescript.md">< TypeScript Support</a>
-  </div>
-  <div>
-    <a href="catch-all-routes.md">Next: Catch-All Routes ></a>
-  </div>
-</div>
+<table width="100%">
+<tr>
+<td align="left"><a href="typescript.md">< TypeScript Support</a></td>
+<td align="right"><a href="catch-all-routes.md">Next: Catch-All Routes ></a></td>
+</tr>
+</table>
