@@ -214,24 +214,24 @@ The `IRouteHandler` interface allows you to define the types for path parameters
 
 import { IRouteHandler } from 'nexpresst';
 
-interface MyLocals {
-  user?: { id: number; name: string };
-  timestamp?: number;
-}
+type Session = {
+  userId: number;
+  roles: string[];
+};
 
 const example: IRouteHandler<
   { id: string }, // Path parameters (e.g., /posts/:id)
   { search: string }, // Query parameters (e.g., /posts?search=term)
   { title: string }, // Request payload (e.g., { title: "New Post" })
   { message: string }, // Response payload (e.g., { message: "Success" })
-  { user: object }, // Request session, if any
-  MyLocals // Response locals (e.g., res.locals.user, res.locals.timestamp)
+  Session, // Request session, if any
+  { timestamp?: number } // Response locals (e.g., res.locals.timestamp)
 > = async (req, res) => {
   const { id } = req.params;
   const { search } = req.query;
   const { title } = req.payload;
-  const { user } = req.session;
-  const { user: localUser, timestamp } = res.locals; // Fully typed!
+  const { userId, roles } = req.session;
+  const { timestamp } = res.locals; // Fully typed!
 
   // Your handler logic here
   return res.statusCode(200).send({ message: `Post ${id} updated with title: ${title}` });
@@ -247,27 +247,24 @@ The `IMiddlewareHandler` interface allows you to define the types for path param
 
 import { IMiddlewareHandler } from 'nexpresst';
 
-interface MyLocals {
-  user?: { id: number; name: string };
-  authenticated?: boolean;
-}
+type Session = {
+  userId: number;
+  roles: string[];
+};
 
 const example: IMiddlewareHandler<
   { id: string }, // Path parameters (e.g., /posts/:id)
   { search: string }, // Query parameters (e.g., /posts?search=term)
   { title: string }, // Request payload (e.g., { title: "New Post" })
   unknown, // Response payload (e.g., { message: "Success" })
-  { user: object }, // Request session, if any
-  MyLocals // Response locals (e.g., res.locals.user, res.locals.authenticated)
+  Session, // Request session, if any
+  { timestamp?: number } // Response locals (e.g., res.locals.timestamp)
 > = async (req, res, next) => {
   const { id } = req.params;
   const { search } = req.query;
   const { title } = req.payload;
-  const { user } = req.session;
-
-  // Set locals with full type safety
-  res.locals.user = { id: 1, name: 'John' };
-  res.locals.authenticated = true;
+  const { userId, roles } = req.session;
+  const { timestamp } = res.locals;
 
   /**
    * If you passed a response payload type, you can return a response satisfying this type.
