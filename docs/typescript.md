@@ -75,9 +75,5 @@ const example: IMiddlewareHandler<
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"><a href="middleware.md">< Middleware</a></td>
-<td align="right"><a href="error-handling.md">Next: Error Handling ></a></td>
-</tr>
-</table>
+<p align="left"><a href="middleware.md">< Middleware</a></p>
+<p align="right"><a href="error-handling.md">Next: Error Handling ></a></p>

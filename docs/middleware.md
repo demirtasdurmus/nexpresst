@@ -114,9 +114,5 @@ This approach ensures that different routes are handled according to their speci
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"><a href="getting-started.md">< Getting Started</a></td>
-<td align="right"><a href="typescript.md">Next: TypeScript Support ></a></td>
-</tr>
-</table>
+<p align="left"><a href="getting-started.md">< Getting Started</a></p>
+<p align="right"><a href="typescript.md">Next: TypeScript Support ></a></p>

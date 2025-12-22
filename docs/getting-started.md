@@ -69,9 +69,5 @@ You can handle all other HTTP methods with the above syntax.
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"><a href="installation.md">< Installation</a></td>
-<td align="right"><a href="middleware.md">Next: Middleware ></a></td>
-</tr>
-</table>
+<p align="left"><a href="installation.md">< Installation</a></p>
+<p align="right"><a href="middleware.md">Next: Middleware ></a></p>

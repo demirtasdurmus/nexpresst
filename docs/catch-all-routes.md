@@ -41,9 +41,5 @@ With this setup, any requests to non-existent API routes will trigger the `notFo
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"><a href="error-handling.md">< Error Handling</a></td>
-<td align="right"><a href="examples.md">Next: Examples ></a></td>
-</tr>
-</table>
+<p align="left"><a href="error-handling.md">< Error Handling</a></p>
+<p align="right"><a href="examples.md">Next: Examples ></a></p>

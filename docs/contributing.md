@@ -13,9 +13,4 @@ To contribute to this project, follow these steps:
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"><a href="examples.md">< Examples</a></td>
-<td align="right"></td>
-</tr>
-</table>
+<p align="left"><a href="examples.md">< Examples</a></p>

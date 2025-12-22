@@ -8,9 +8,5 @@ npm install nexpresst
 
 ---
 
-<table width="100%">
-<tr>
-<td align="left"></td>
-<td align="right"><a href="getting-started.md">Next: Getting Started ></a></td>
-</tr>
-</table>
+<p align="left"></p>
+<p align="right"><a href="getting-started.md">Next: Getting Started ></a></p>
