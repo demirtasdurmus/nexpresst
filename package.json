@@ -1,6 +1,6 @@
 {
   "name": "nexpresst",
-  "version": "2.0.0",
+  "version": "2.1.0-rc.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -27,6 +27,7 @@
     "dev:tsc": "tsc --watch --preserveWatchOutput -p tsconfig.build.json",
     "dev:node": "node --watch dist/index.js",
     "dev": "npm run dev:tsc & npm run dev:node",
+    "link:local": "npm run build && npm link",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint --fix .",

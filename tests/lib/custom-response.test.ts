@@ -304,4 +304,45 @@ describe('CustomResponse', () => {
     expect(res.headers.get('Location')).toEqual('http://example.com/');
     expect(res.headers.get('X-Custom-Header')).toEqual('custom-value');
   });
+
+  it('should have an empty locals object by default', () => {
+    const response = new CustomResponse();
+
+    expect(response.locals).toEqual({});
+    expect(typeof response.locals).toBe('object');
+  });
+
+  it('should allow setting and getting values on locals', () => {
+    const response = new CustomResponse();
+
+    response.locals.user = { id: 1, name: 'John' };
+    response.locals.authenticated = true;
+
+    expect(response.locals.user).toEqual({ id: 1, name: 'John' });
+    expect(response.locals.authenticated).toBe(true);
+  });
+
+  it('should preserve locals across method chaining', () => {
+    const response = new CustomResponse();
+
+    response.locals.data = 'test';
+    const chained = response.statusCode(200);
+
+    expect(chained.locals.data).toBe('test');
+  });
+
+  it('should support typed locals with generics', () => {
+    interface MyLocals {
+      user?: { id: number; name: string };
+      timestamp?: number;
+    }
+
+    const response = new CustomResponse<unknown, MyLocals>();
+
+    response.locals.user = { id: 1, name: 'John' };
+    response.locals.timestamp = Date.now();
+
+    expect(response.locals.user?.id).toBe(1);
+    expect(typeof response.locals.timestamp).toBe('number');
+  });
 });

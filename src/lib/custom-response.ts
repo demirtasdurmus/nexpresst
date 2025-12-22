@@ -2,20 +2,31 @@
 import { NextResponse } from 'next/server';
 import { BodyInit, CookieOptions, ResponseInit } from '../interfaces';
 
-/**
- * TODO: Move this to a shared utility file and add tests
- * The following function is used to capitalize the first letter of a string.
- */
-function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-export class CustomResponse<TResponseData = unknown> extends NextResponse {
+export class CustomResponse<
+  TResponseData = unknown,
+  TLocals extends Record<string, any> = Record<string, any>,
+> extends NextResponse {
   private noBodyStatusCodes = [204, 205, 304];
   /**
    * The following private property is used to store the status code of the response.
    */
   private _statusCode: number = 200;
+
+  /**
+   * An object that contains response local variables scoped to the request/response lifecycle.
+   * This property is useful for exposing request-level information such as the request path name,
+   * authenticated user, user settings, etc.
+   *
+   * @example
+   * ```typescript
+   * // In middleware
+   * res.locals.user = { id: 1, name: 'John' };
+   *
+   * // In route handler
+   * const user = res.locals.user;
+   * ```
+   */
+  public locals: TLocals = {} as TLocals;
 
   constructor(body?: BodyInit | null, init?: ResponseInit) {
     super(body, init);
@@ -24,6 +35,16 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
   /**
    * This method is used to validate the status code.
    * It throws an error if the status code is not a number or is not between 100 and 599.
+   * @param statusCode - The status code to validate.
+   * @returns void
+   * @throws TypeError if the status code is not a number.
+   * @throws RangeError if the status code is not between 200 and 599.
+   * @example
+   * ```typescript
+   * response.statusCode(200);
+   * response.statusCode(404);
+   * response.statusCode(500);
+   * ```
    */
   private validateStatusCode(statusCode: number): void {
     if (typeof statusCode !== 'number') {
@@ -33,6 +54,15 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
     if (statusCode < 200 || statusCode > 599) {
       throw new RangeError('Status code must be between 200 and 599');
     }
+  }
+
+  /**
+   * The following function is used to capitalize the first letter of a string.
+   * @param str - The string to capitalize.
+   * @returns The capitalized string.
+   */
+  private capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   /**
@@ -131,7 +161,7 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
         if (typeof options.sameSite === 'boolean') {
           cookieString += `; SameSite=Strict`;
         } else {
-          cookieString += `; SameSite=${capitalizeFirstLetter(options.sameSite)}`;
+          cookieString += `; SameSite=${this.capitalizeFirstLetter(options.sameSite)}`;
         }
       }
     } else {
@@ -171,8 +201,8 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
    * response.redirect('https://example.com/new-url');
    * response.redirect(301, 'https://example.com/new-url');
    */
-  redirect(url: string): CustomResponse<unknown>;
-  redirect(statusCode: number, url: string): CustomResponse<unknown>;
+  redirect(url: string): CustomResponse<unknown, TLocals>;
+  redirect(statusCode: number, url: string): CustomResponse<unknown, TLocals>;
 
   redirect(statusCodeOrUrl: number | string, maybeUrl?: string) {
     let url: string;
@@ -210,7 +240,7 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
    * @param body The body of the response.
    * @returns A CustomResponse object.
    */
-  send(body?: TResponseData) {
+  send(body?: TResponseData): CustomResponse<TResponseData, TLocals> {
     let response: NextResponse;
 
     // Handle special cases where no body should be sent
@@ -232,14 +262,14 @@ export class CustomResponse<TResponseData = unknown> extends NextResponse {
     });
 
     // TODO: Search for a better way to handle this
-    return response as CustomResponse<TResponseData>;
+    return response as CustomResponse<TResponseData, TLocals>;
   }
 
   /**
    * The following method sends a response with no body.
    * @returns A CustomResponse object.
    */
-  end() {
+  end(): CustomResponse<TResponseData, TLocals> {
     // Finalize the response without a body
     return this.send();
   }
