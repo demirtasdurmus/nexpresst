@@ -4,6 +4,7 @@
 .husky/**
 src/**
 tests/**
+docs/**
 
 .commitlintrc.json
 .gitignore

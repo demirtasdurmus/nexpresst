@@ -4,6 +4,8 @@
 
 **Nexpresst** is a lightweight TypeScript utility designed to build Express-like API routes in Next.js applications. It leverages the Next.js App Router's file-based routing system, providing a structured way to handle HTTP methods, middleware, and response processing—all with strong TypeScript support.
 
+> ⚠️ **Note:** This version requires Next.js >= 15.0.0. For Next.js < 15.0.0, please use Nexpresst version 1.X.X.
+
 ## Features
 
 - **Express-like Routing:** Use familiar patterns from Express to create API routes in Next.js.
