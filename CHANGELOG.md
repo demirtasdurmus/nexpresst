@@ -1,5 +1,12 @@
 # Nexpresst Changelog
 
+# [2.2.0](https://github.com/demirtasdurmus/nexpresst/compare/v2.1.0...v2.2.0) (2025-12-23)
+
+
+### Features
+
+* add support for next 15+ versions ([#53](https://github.com/demirtasdurmus/nexpresst/issues/53)) ([a863538](https://github.com/demirtasdurmus/nexpresst/commit/a86353815a59a08f2af0dc5718bd3d8ac8003ee9))
+
 # [2.2.0-rc.1](https://github.com/demirtasdurmus/nexpresst/compare/v2.1.0...v2.2.0-rc.1) (2025-12-23)
 
 
