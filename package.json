@@ -61,6 +61,6 @@
     "vitest": "^4.0.15"
   },
   "peerDependencies": {
-    "next": "^15.0.0"
+    "next": ">=15.0.0"
   }
 }
