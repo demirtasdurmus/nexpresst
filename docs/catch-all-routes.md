@@ -28,7 +28,7 @@ import { exportAllHttpMethods, IRouteHandler } from 'nexpresst';
 const notFoundHandler: IRouteHandler = async (req, res) => {
   console.log(req.params); // // Access to params passed as a string[]
   // Define your custom 404 logic here
-  return res.statusCode(404).end();
+  return res.statusCode(404).send();
 };
 
 export const { GET, POST, PUT, DELETE, PATCH, HEAD } = exportAllHttpMethods(
